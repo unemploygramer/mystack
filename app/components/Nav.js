@@ -25,11 +25,15 @@ function Nav() {
  
   return (
     <div className=" z-30 bg-gray-800  h-20 flex items-center justify-end  pr-4 pl-2   fixed top-0 w-full">
-       <div>      <div>
+       <div>
+
+
+           <div>
         <label className="h-0">
+
         </label>
       </div>
-  <button onClick={()=> setOpen(true)} className="bg-violet-500 p-1 rounded-md">
+  <button onClick={()=> setOpen(true)} className="z-5 bg-violet-500 p-1 rounded-md">
 Menu
   </button>
 
@@ -41,9 +45,10 @@ Menu
            <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/List">Entries</Link>
            <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/">Make Entry</Link>
 
+
            <button onClick={() => signOut({ callbackUrl: process.env.NEXTAUTH_URL })} className="text-stone-100 p-4 text-2xl text-center" >Log out</button>
-     
-        </div> </div> 
+
+        </div> </div>
 
     </div>
   );

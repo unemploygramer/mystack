@@ -41,7 +41,7 @@ async function page() {
   return (
     <div className="container mx-auto px-4 py-8 mt-24">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
-        {data.userJournals.map((journal) => (
+        {data && data.userJournals && data.userJournals.map((journal) => (
         <Link href="/journal/[id]" as={`/journal/${journal._id}`}>
           <div key={journal._id} className="bg-violet-950 shadow overflow-hidden sm:rounded-lg p-6">
             <h2 className="text-md font-bold text-white">{journal.text}</h2>

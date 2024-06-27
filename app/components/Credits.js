@@ -34,7 +34,7 @@ async function fetchData() {
  async function Credits() {
     const  credits = await fetchData(); 
   return (
-<h1  className="ml-4 fixed top-7 z-50 text-xl text-stone-100">{`credits:${credits}`}</h1>
+<h1  className="ml-4 z-90 fixed top-0 left-0 text-xl text-stone-100 bg-red-500">{`credits:${credits}`}</h1>
   )
 }
 

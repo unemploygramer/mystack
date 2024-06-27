@@ -3,10 +3,12 @@
 import { useState, useEffect } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react"
 import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
 
 
 export default function JournalInput () {
+  const router = useRouter();
 
   const [text, setText] = useState('');
   const characterCount = text.length;
@@ -15,6 +17,8 @@ export default function JournalInput () {
     console.log(session, "session in journal input")
   const [isLoading, setLoading] = useState(false)
     const fetchData = async () => {
+        setLoading(true); // Set loading state to true when fetching starts
+
       try {
       const makeJournalPayload = {
         "text": text,
@@ -50,14 +54,17 @@ console.log(typeof(affirmationBody),"the type of affirmation body")
       body: JSON.stringify({id: journalEntry.journalEntry._id, affirmation: affirmation})
     });
     if (updateAffirmation.ok) {
-      setText(''); // Clear the textarea if the request was successful
+          router.replace(`/journal/${journalEntry.journalEntry._id}` );
+
+
     }
 
 
         setData(data);
-        setLoading(false);
       } catch (error) {
         console.error('Failed to fetch profile data:', error);
+
+            setLoading(false); // Set loading state back to false when fetching is complete
       }
     };
 
@@ -76,14 +83,23 @@ console.log(typeof(affirmationBody),"the type of affirmation body")
   return (
     <div className="dark:bg-gray-400 w-4/5 max-w-2xl mx-auto mt-24 bg-violet-500 p-6 rounded-lg shadow-lg">
       <h2 className="text-white mb-4">Journal Entry</h2>
-      <textarea
-        className="w-full px-3 py-2 h-[400px] mb-3 text-white bg-violet-400 rounded-md focus:outline-none"
-        placeholder="Write something..."
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      ></textarea>
-      <p className="text-black">{characterCount} characters</p>
-      <button onClick={fetchData} className="px-3 py-2 bg-violet-800 text-white bg--500 rounded-md hover:bg-violet-600 focus:outline-none" disabled={text.length === 0}>Submit</button>
+          {isLoading ? (
+          <div className="flex justify-center h-24 items-center">
+            <p className="text-2xl text-black-700 font-bold">Loading...</p>
+            </div>
+            // Display loading message when isLoading is true
+          ) : (
+            <>
+              <textarea
+                className="w-full placeholder-violet-800 px-3 py-2 h-[400px] mb-3 text-white bg-violet-400 rounded-md focus:outline-none"
+                placeholder="Write something..."
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              ></textarea>
+              <p className="text-black">{characterCount} characters</p>
+              <button onClick={fetchData} className="px-3 py-2 bg-violet-800 text-white bg--500 rounded-md hover:bg-violet-600 focus:outline-none" disabled={text.length === 0}>Submit</button>
+            </>
+          )}
     </div>
   );
 }

@@ -10,7 +10,10 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
   },
-
+  credits: {
+    type: Number,
+    default: 5,
+  },
 });
 
 const User = mongoose.models?.User || mongoose.model("User", userSchema)

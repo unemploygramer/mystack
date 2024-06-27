@@ -5,6 +5,10 @@ const journalEntrySchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  textiv: {
+      type: String,
+      required: true
+  },
   date: {
     type: Date,
     default: Date.now
@@ -17,6 +21,11 @@ const journalEntrySchema = new mongoose.Schema({
   affirmation: {
     type: String,
     required: false
+  },
+  affirmationiv: {
+    type: String,
+    required: false
+
   }
 });
 
