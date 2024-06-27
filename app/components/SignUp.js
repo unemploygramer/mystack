@@ -111,50 +111,54 @@ import { signIn } from 'next-auth/react';
   };
 
   return (
-    <div className="flex justify-center bg-gray-900 items-center min-h-screen">
-      <div className="max-w-md w-full p-8 bg-gray-800 text-white rounded-lg shadow-lg">
-        <h2 className="text-3xl font-semibold mb-6 text-center">Sign Up</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="email" className="text-sm text-gray-400">
-              Email:
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={handleEmailChange}
-              className="mt-1 p-2 w-full border rounded-md bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="password" className="text-sm text-gray-400">
-              Password:
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={handlePasswordChange}
-              className="mt-1 p-2 w-full border rounded-md bg-gray-700 text-white focus:outline-none focus:border-blue-500"
-              required
-            />
-          </div>
-          {error && <p className="mb-4 text-red-500">{error}</p>}
+    <div className="mt-24 w-[90vw] rounded-[7%] border-4 border-violet-500 max-w-md mx-auto bg-violet-950  text-white p-8 shadow-lg rounded-lg ">
+      <h2 className="text-3xl font-semibold mb-6 text-center">Sign Up</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label htmlFor="email" className="text-sm text-white-300">
+            Email:
+          </label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={handleEmailChange}
+            className="mt-1 p-2 w-full border rounded-md bg-violet-900 text-white focus:outline-none focus:border-blue-500"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="password" className="text-sm text-white-300">
+            Password:
+          </label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={handlePasswordChange}
+            className="mt-1 p-2 w-full border rounded-md bg-violet-900 text-white focus:outline-none focus:border-blue-500"
+            required
+          />
+        </div>
+        <div className="mb-6">
           <button
             type="submit"
-            className="bg-blue-500 text-white p-2 rounded w-full hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
+            className="bg-violet-500 text-white p-2 rounded w-full hover:bg-violet-700 focus:outline-none focus:shadow-outline-blue"
           >
             Sign Up
           </button>
-        </form>
-        <p className="mt-4 text-center text-gray-400">
-          Already have an account?{' '}
-          <Link href="/Login" className="text-blue-500 hover:underline">
-            Login
-          </Link>
-        </p>
+        </div>
+      </form>
+      <div className='w-full  flex justify-center'>
+        <h2 className='text-red-800 text-2xl font-bold'>
+          {error}
+        </h2>
+      </div>
+      <div className="text-center text-white-300">
+        <p className="mb-4">Already have an account?</p>
+        <Link href="/login" className=" bg-violet-400 rounded p-2 m-4 text-black hover:underline">
+          Login
+        </Link>
       </div>
     </div>
   );

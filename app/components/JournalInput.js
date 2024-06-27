@@ -2,9 +2,12 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react"
+import { redirect } from 'next/navigation'
+
 
 
 export default function JournalInput () {
+
   const [text, setText] = useState('');
   const characterCount = text.length;
   const [data, setData] = useState(null)
@@ -65,27 +68,22 @@ console.log(typeof(affirmationBody),"the type of affirmation body")
 
   }, [text]);
   if (!session) {
-    return (
-      <div className="dark:bg-gray-800 w-4/5 max-w-2xl mx-auto p-6 rounded-lg shadow-lg">
-        <h2 className="text-white mb-4">Please sign in to make a journal entry</h2>
-        <button onClick={signIn} className="px-3 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none">Sign In</button>
-      </div>
-    );
+    redirect('/login')
   }
 
 
 
   return (
-    <div className="dark:bg-gray-800 w-4/5 max-w-2xl mx-auto p-6 rounded-lg shadow-lg">
+    <div className="dark:bg-gray-400 w-4/5 max-w-2xl mx-auto mt-24 bg-violet-500 p-6 rounded-lg shadow-lg">
       <h2 className="text-white mb-4">Journal Entry</h2>
       <textarea
-        className="w-full px-3 py-2 h-[400px] mb-3 text-gray-700 bg-gray-200 rounded-md focus:outline-none"
+        className="w-full px-3 py-2 h-[400px] mb-3 text-white bg-violet-400 rounded-md focus:outline-none"
         placeholder="Write something..."
         value={text}
         onChange={(e) => setText(e.target.value)}
       ></textarea>
       <p className="text-black">{characterCount} characters</p>
-      <button onClick={fetchData} className="px-3 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none" disabled={text.length === 0}>Submit</button>
+      <button onClick={fetchData} className="px-3 py-2 bg-violet-800 text-white bg--500 rounded-md hover:bg-violet-600 focus:outline-none" disabled={text.length === 0}>Submit</button>
     </div>
   );
 }

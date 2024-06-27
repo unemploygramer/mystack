@@ -8,7 +8,7 @@ async function page() {
   const session = await getServerSession(authOptions);
 console.log(session,"session")
   return (
-    <div>
+    <div className="mt-32">
         <LoginComponent/>
     </div>
   )
