@@ -4,9 +4,9 @@ import JournalEntry from "../../../../models/JournalEntry";
 import crypto from 'crypto';
 function decrypt(encrypted, iv) {
   const algorithm = 'aes-256-ctr';
-  const secretKey = 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3'; // replace with your own secret key
+//  const secretKey = 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3'; // replace with your own secret key
 
-  const decipher = crypto.createDecipheriv(algorithm, secretKey, Buffer.from(iv, 'hex'));
+  const decipher = crypto.createDecipheriv(algorithm, process.env.DECRYPT_KEY, Buffer.from(iv, 'hex'));
 
   const decrypted = Buffer.concat([decipher.update(Buffer.from(encrypted, 'hex')), decipher.final()]);
 

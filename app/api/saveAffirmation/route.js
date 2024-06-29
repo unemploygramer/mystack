@@ -8,7 +8,7 @@ function encrypt(text) {
   const secretKey = 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3'; // replace with your own secret key
   const iv = crypto.randomBytes(16);
 
-  const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
+  const cipher = crypto.createCipheriv(algorithm, process.env.DECRYPT_KEY, iv);
   const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
 
   return {
