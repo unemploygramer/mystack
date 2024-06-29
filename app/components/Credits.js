@@ -32,9 +32,21 @@ async function fetchData() {
     }
   }
  async function Credits() {
-    const  credits = await fetchData(); 
+   const session = await getServerSession(authOptions);
+
+   // Check if session or session.user is null
+   if (!session || !session.user) {
+     return null;
+   }
+
+   const userEmail = session.user.email;
+   console.log(userEmail,"the user email")
+    const  credits = await fetchData();
+    console.log(credits,"the credits") ;
   return (
-<h1  className="ml-4 z-90 fixed top-0 left-0 text-xl text-stone-100 bg-red-500">{`credits:${credits}`}</h1>
+    <div className="flex justify-start items-start mt-6 ml-4    fixed top-0 z-10 ">
+      <h1 className="font-3xl text-xl text-stone-100 ">{`credits:${credits}`}</h1>
+    </div>
   )
 }
 

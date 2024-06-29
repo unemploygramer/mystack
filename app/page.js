@@ -8,8 +8,8 @@ export default async function Home() {
   console.log(session, "the session");
   return (
     <main className="">
+
       <div className="">
-      <Credits/>
  <h1 className="">My Stack</h1>
 <JournalInput/>
       </div>

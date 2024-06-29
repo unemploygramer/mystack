@@ -24,7 +24,7 @@ function Nav() {
 
  
   return (
-    <div className=" z-30 bg-gray-800  h-20 flex items-center justify-end  pr-4 pl-2   fixed top-0 w-full">
+    <div className=" z-4 bg-gray-800  h-20 flex items-center justify-end  pr-4 pl-2   fixed top-0 w-full">
        <div>
 
 
@@ -33,7 +33,7 @@ function Nav() {
 
         </label>
       </div>
-  <button onClick={()=> setOpen(true)} className="z-5 bg-violet-500 p-1 rounded-md">
+  <button onClick={()=> setOpen(true)} className="z-4 bg-violet-500 p-1 rounded-md">
 Menu
   </button>
 
@@ -41,7 +41,7 @@ Menu
         className={` ${StyleRender()}  fixed w-screen h-screen top-0 right-0`}
       >
       </div>
-        <div className={`${StyleRender()} z-20 fixed h-screen w-1/2 top-0 right-0 bg-gray-800 flex items-center flex-col`}>
+        <div className={`${StyleRender()} z-5 fixed h-screen w-1/2 top-0 right-0 bg-gray-800 flex items-center flex-col`}>
            <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/List">Entries</Link>
            <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/">Make Entry</Link>
 

@@ -16,10 +16,25 @@ export default function JournalInput () {
     const { data: session } = useSession();
     console.log(session, "session in journal input")
   const [isLoading, setLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(null); // Add this line
+
     const fetchData = async () => {
         setLoading(true); // Set loading state to true when fetching starts
 
       try {
+          // Check if the user has enough credits
+          const creditsResponse = await fetch(`/api/getCredits/${session.user.email}`);
+          const credits = await creditsResponse.json();
+
+          if (credits < 1) {
+            console.error('Not enough credits');
+                    setErrorMessage('Not enough credits'); // Set the error message
+
+            setLoading(false);
+            return;
+          }
+
+
       const makeJournalPayload = {
         "text": text,
         "owner": session.user.email,
@@ -33,7 +48,7 @@ export default function JournalInput () {
       });
 
     const journalEntry = await saveJournal.json();
-
+console.log(journalEntry, "journal entry")
   const response = await fetch('/api/submitWord', {
     method: 'POST',
     headers: {
@@ -43,8 +58,10 @@ export default function JournalInput () {
   });
     const affirmationBody = await response.json();
 console.log(affirmationBody,"the affirmation body")
-console.log(typeof(affirmationBody),"the type of affirmation body")
 
+    // Subtract one credit
+   const tookCreds = await  fetch(`/api/takeCredits/${session.user.email}`, { method: 'POST' });
+   console.log(tookCreds, "took creds")
  const affirmation = affirmationBody.affirmation;
     const updateAffirmation = await fetch('/api/saveAffirmation', {
       method: 'PATCH',
@@ -53,6 +70,7 @@ console.log(typeof(affirmationBody),"the type of affirmation body")
       },
       body: JSON.stringify({id: journalEntry.journalEntry._id, affirmation: affirmation})
     });
+    console.log(updateAffirmation, "update affirmation")
     if (updateAffirmation.ok) {
           router.replace(`/journal/${journalEntry.journalEntry._id}` );
 
@@ -98,6 +116,8 @@ console.log(typeof(affirmationBody),"the type of affirmation body")
               ></textarea>
               <p className="text-black">{characterCount} characters</p>
               <button onClick={fetchData} className="px-3 py-2 bg-violet-800 text-white bg--500 rounded-md hover:bg-violet-600 focus:outline-none" disabled={text.length === 0}>Submit</button>
+                    {errorMessage && <p className="text-red-700 font-bold">{errorMessage}</p>} {/* Render the error message in red if it exists */}
+
             </>
           )}
     </div>
