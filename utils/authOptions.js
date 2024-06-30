@@ -3,7 +3,7 @@ import User from "../models/User"
 import NextAuth, {NextAuthOptions} from "next-auth"
 import  CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
- const authOptions = {
+ const default const authOptions = {
     // Configure one or more authentication providers
     providers: [
       CredentialsProvider({
@@ -64,4 +64,3 @@ import bcrypt from "bcryptjs"
       },
     },
   };
-  export default authOptions;
