@@ -9,11 +9,10 @@ async function fetchData() {
     const session = await getServerSession(authOptions);
 
     console.log(session,"the session on the server!!")
-  // await console.log(data,"all script data ")
   const userEmail = await  session.user.email;
   console.log(userEmail,"the user email")
     try {
-      // const response = await fetch(`${process.env.NEXTAUTH_URL}/api/[killme@gmail.com]/getScript`, {
+
       const response = await fetch(`${process.env.NEXTAUTH_URL}/api/getCredits/${session.user.email}`, {
   cache: "no-cache",   
      method: 'GET',
