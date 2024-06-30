@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import {connect} from "../../../../utils/config/dbConfig"
 import JournalEntry from "../../../../models/JournalEntry";
 import crypto from 'crypto';
+import { redirect } from 'next/navigation'
+
 
 function decrypt(encrypted, iv) {
   const algorithm = 'aes-256-ctr';

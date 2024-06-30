@@ -17,6 +17,7 @@ export default function JournalInput () {
     console.log(session, "session in journal input")
   const [isLoading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState(null); // Add this line
+  const maxCharacterCount = 3900; // Set the maximum character count
 
     const fetchData = async () => {
         setLoading(true); // Set loading state to true when fetching starts
@@ -100,7 +101,9 @@ console.log(affirmationBody,"the affirmation body")
 
   return (
     <div className="dark:bg-gray-400 w-4/5 max-w-2xl mx-auto mt-24 bg-violet-500 p-6 rounded-lg shadow-lg">
-      <h2 className="text-white mb-4">Journal Entry</h2>
+<div className=" text-center">
+      <h2 className="text-white text-2xl mb-4 font-bold">Journal Entry</h2>
+      </div>
           {isLoading ? (
           <div className="flex justify-center h-24 items-center">
             <p className="text-2xl text-black-700 font-bold">Loading...</p>
@@ -108,12 +111,19 @@ console.log(affirmationBody,"the affirmation body")
             // Display loading message when isLoading is true
           ) : (
             <>
-              <textarea
-                className="w-full placeholder-violet-800 px-3 py-2 h-[400px] mb-3 text-white bg-violet-400 rounded-md focus:outline-none"
-                placeholder="Write something..."
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-              ></textarea>
+<textarea
+  className="w-full placeholder-violet-800 px-3 py-2 h-[400px] mb-3 text-white bg-violet-400 rounded-md focus:outline-none"
+  placeholder="Write something..."
+  value={text}
+  onChange={(e) => {
+    if (e.target.value.length <= maxCharacterCount) {
+      setText(e.target.value);
+      setErrorMessage(null); // Clear the error message when the text length is within the limit
+    } else {
+      setErrorMessage('You have reached the maximum character limit.'); // Set the error message when the text length exceeds the limit
+    }
+  }}
+></textarea>
               <p className="text-black">{characterCount} characters</p>
               <button onClick={fetchData} className="px-3 py-2 bg-violet-800 text-white bg--500 rounded-md hover:bg-violet-600 focus:outline-none" disabled={text.length === 0}>Submit</button>
                     {errorMessage && <p className="text-red-700 font-bold">{errorMessage}</p>} {/* Render the error message in red if it exists */}

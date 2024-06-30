@@ -4,6 +4,8 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from "../../api/auth/[...nextauth]/route"
 import React from 'react';
 import Link from 'next/link';
+import { redirect } from 'next/navigation'
+
 
 
 
@@ -35,7 +37,11 @@ async function page({params}) {
   console.log(data,"the data")
   console.log(params, "the params")
   const journal = data.userJournals[0];
-
+    const session = await getServerSession(authOptions);
+    console.log(session, "the session");
+    if (!session) {
+      redirect('/login')
+    }
 
   return (
   <div className="container mx-auto px-4 py-8 mt-24">
