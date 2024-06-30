@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import {connect} from "../../../../utils/config/dbConfig"
-import Script from "../../../../models/script"
 import User from "../../../../models/User"
 import { getSession } from "next-auth/client"
 import type { NextApiRequest, NextApiResponse } from 'next'
