@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import {connect} from "../../../../utils/config/dbConfig"
 import User from "../../../../models/User"
-import { getSession } from "next-auth/client"
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 // export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
