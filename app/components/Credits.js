@@ -16,6 +16,8 @@ async function fetchData() {
       const response = await fetch(`${process.env.NEXTAUTH_URL}/api/getCredits/${session.user.email}`, {
   cache: "no-cache",   
      method: 'GET',
+
+ cache: "no-store",
      
       });
   

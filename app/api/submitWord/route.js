@@ -14,7 +14,7 @@ const tools = [
         type: "function",
         function: {
             name: "generate_affirmation",
-            description: "Generates an affirmation based on journal entries",
+            description: "Generates an affirmation in first person based on journal entries",
             parameters: {
                 type: "object",
                 properties: {
