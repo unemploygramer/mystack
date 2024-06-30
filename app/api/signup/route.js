@@ -1,8 +1,8 @@
 // utils/dbConnect.js
 
-import {connect} from "@/utils/config/dbConfig"
+import {connect} from "../../../utils/config/dbConfig"
 import bcryptjs from "bcryptjs";
-import User from "@/models/User";
+import User from "../../../models/User";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(request) {
