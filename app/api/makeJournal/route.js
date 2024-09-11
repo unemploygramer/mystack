@@ -26,15 +26,15 @@ await connect();
 console.log("Connected to DB")
     // Extract the necessary data from the request
     const { text, owner, affirmation } = await req.json();
-        console.log({ text, owner, affirmation },"#### the text owner and affirmation");
-
-    // Fetch the user's credits
-    const user = await User.findOne({ email: owner });
-console.log(user,"the user ")
-    // Check if the user has enough credits
-    if (user.credits <= 0) {
-      return NextResponse.json({ message: "You do not have enough credits to create a journal entry" }, { status: 400 });
-    }
+//        console.log({ text, owner, affirmation },"#### the text owner and affirmation");
+//
+//    // Fetch the user's credits
+//    const user = await User.findOne({ email: owner });
+//console.log(user,"the user ")
+//    // Check if the user has enough credits
+//    if (user.credits <= 0) {
+//      return NextResponse.json({ message: "You do not have enough credits to create a journal entry" }, { status: 400 });
+//    }
     // Encrypt the journal text
     const encryptedText = encrypt(text);
     console.log(encryptedText);
