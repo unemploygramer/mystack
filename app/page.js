@@ -7,10 +7,10 @@ import { redirect } from 'next/navigation'
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
-  console.log(session, "the session");
-    if (!session) {
-      redirect('/login')
-    }
+//  console.log(session, "the session");
+//    if (!session) {
+//      redirect('/login')
+//    }
   return (
     <main className="">
 

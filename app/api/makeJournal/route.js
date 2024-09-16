@@ -29,12 +29,15 @@ console.log("Connected to DB")
 //        console.log({ text, owner, affirmation },"#### the text owner and affirmation");
 //
 //    // Fetch the user's credits
-//    const user = await User.findOne({ email: owner });
-//console.log(user,"the user ")
-//    // Check if the user has enough credits
-//    if (user.credits <= 0) {
-//      return NextResponse.json({ message: "You do not have enough credits to create a journal entry" }, { status: 400 });
-//    }
+    const user = await User.findOne({ email: owner });
+console.log(user,"the user ")
+    // Check if the user has enough credits
+// Check if the user exists and has enough credits
+if(user!==null){
+if( user.credits <= 0) {
+  return NextResponse.json({ message: "You do not have enough credits to create a journal entry" }, { status: 400 });
+}
+}
     // Encrypt the journal text
     const encryptedText = encrypt(text);
     console.log(encryptedText);
@@ -57,8 +60,9 @@ console.log("Connected to DB")
 
   } catch (error) {
     console.log(error)
-    return NextResponse.json({ message: "An error occurred while creating the journal entry" }, { status: 500 });
-  }
+  console.log('Error message:', error.message);
+  console.log('Stack trace:', error.stack);
+  return NextResponse.json({ message: "An error occurred while creating the journal entry" }, { status: 500 });  }
 
 
 
