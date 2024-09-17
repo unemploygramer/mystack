@@ -44,7 +44,7 @@ const [userId, setUserId] = useState(null);
 
  
   return (
-    <div className=" z-4 bg-gray-600  h-20 flex items-center justify-end  pr-4 pl-2   fixed top-0 w-full">
+    <div className=" z-50 bg-gray-600  h-20 flex items-center justify-end  pr-4 pl-2   fixed top-0 w-full">
        <div>
 
 
@@ -54,7 +54,7 @@ const [userId, setUserId] = useState(null);
         </label>
       </div>
 
-         <button onClick={()=> setOpen(true)} className="z-51 bg-amber-600  text-4xl p-1 rounded-md text-white">
+         <button onClick={()=> setOpen(true)} className="z-73 bg-amber-600  text-4xl p-1 rounded-md text-white">
           <IoMenu />
           </button>
 
@@ -65,6 +65,9 @@ const [userId, setUserId] = useState(null);
         <div className={`${StyleRender()} z-5 fixed h-screen w-1/2 top-0 right-0 bg-gray-600 flex items-center flex-col`}>
            <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/List">Entries</Link>
            <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/">Make Entry</Link>
+           <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/login">Login</Link>
+                      <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/SignUp">Sign Up</Link>
+
 
 
            <button onClick={() => signOut({ callbackUrl: process.env.NEXTAUTH_URL })} className="text-stone-100 p-4 text-2xl text-center" >Log out</button>

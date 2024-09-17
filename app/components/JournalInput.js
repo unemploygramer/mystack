@@ -126,7 +126,7 @@ console.log(makeJournalPayload,"the makeJournalPayload")
       body: JSON.stringify({id: journalEntry.journalEntry._id, affirmation: affirmation})
     });
     if (updateAffirmation.ok) {
-          router.replace(`/journal/${journalEntry.journalEntry._id}` );
+          router.replace(`/newJournal/${journalEntry.journalEntry._id}` );
 
 
     }
@@ -150,19 +150,18 @@ console.log(makeJournalPayload,"the makeJournalPayload")
 
 
   return (
-    <div className="dark:bg-gray-400 w-4/5 max-w-2xl mx-auto mt-24  p-6 rounded-lg ">
-<div className=" text-center">
-      <h2 className=" text-2xl mb-4 font-bold">Journal Entry</h2>
-      </div>
+    <div className="dark:bg-gray-400 w-full flex justify-center flex-col max-w-2xl mx-auto  p-6 rounded-lg ">
+
           {isLoading ? (
           <div className="flex justify-center h-24 items-center">
             <p className="text-2xl text-black-700 font-bold">Loading...</p>
             </div>
             // Display loading message when isLoading is true
           ) : (
-            <>
+            <div className=" flex items-center flex-col">
+
 <textarea
-  className="w-full placeholder-orange-800 px-3 py-2 h-[400px] mb-3  bg-orange-200 rounded-md focus:outline-none shadow-lg"
+  className="w-full p-2 placeholder-orange-800 px-3 h-[300px] mb-3  bg-orange-200 rounded-md focus:outline-none shadow-lg"
   placeholder="What's on your mind?"
   value={text}
   onChange={(e) => {
@@ -179,7 +178,7 @@ console.log(makeJournalPayload,"the makeJournalPayload")
               <button onClick={fetchData} className="px-3 py-2 bg-amber-500  bg--500 rounded-md hover:bg-amber-600 focus:outline-none" disabled={text.length === 0}>Get Affirmation</button>
                     {errorMessage && <p className="text-red-700 font-bold">{errorMessage}</p>} {/* Render the error message in red if it exists */}
 </div>
-            </>
+            </div>
           )}
     </div>
   );

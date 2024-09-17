@@ -49,9 +49,9 @@ async function page({params}) {
 
    }
    console.log(userId,"the userId")
-    if (!session) {
-      redirect('/login')
-    }
+if (journal.owner.includes('@')) {
+ redirect('/login')
+}
 
   return (
   <div className="container mx-auto px-4 py-8 mt-24">

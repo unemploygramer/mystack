@@ -17,6 +17,7 @@ module.exports = {
         slideIn: {
           "0%": {  transform: "translateX(100%)" },
           "100%": {transform:  "translateX(0%)" },
+
           // "0%": { opacity: "0" },
           // "100%": { opacity: "1", visibility: "visible" },
         },
@@ -26,6 +27,22 @@ module.exports = {
           "0%": {  transform: "translateX(0%)" },
           "100%": {transform:  "translateX(100%)" },
         },
+          slideInFromBottom: {
+            "0%": {
+              transform: "translateY(100%)",
+              overflow: "hidden"
+
+            },
+            "100%": {
+              transform: "translateY(0%)",
+              overflow: "hidden"
+
+            },
+          },
+                  slideOutFromBottom: {
+                    "0%": { transform: "translateY(0%)" },
+                    "100%": { transform: "translateY(100%)" },
+                  },
         spun: {
           // "0%": { opacity: "1" },
           // "100%": { opacity: "0", visibility: "invisible" },
@@ -58,7 +75,9 @@ module.exports = {
       slideIn: "slideIn 400ms ease-in-out forwards",
       slideOut: "slideOut 400ms ease-in-out forwards",
       spinner: "spun 10000ms linear infinite",
-      giglan: "giglan 1000ms linear infinite"
+      giglan: "giglan 1000ms linear infinite",
+              slideInFromBottom: "slideInFromBottom 400ms ease-in-out forwards",
+              slideOutFromBottom: "slideOutFromBottom 400ms ease-in-out forwards"
       // fadeIn: "fadeIn 400ms ease-in-out forwards",
       // fadeOut: "fadeOut 400ms ease-in-out forwards",
     },

@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../utils/authOptions";
 import Credits from "./components/Credits";
 import { redirect } from 'next/navigation'
-
+import Title from "./components/Title"
 export default async function Home() {
   const session = await getServerSession(authOptions);
 //  console.log(session, "the session");
@@ -13,11 +13,11 @@ export default async function Home() {
 //    }
   return (
     <main className="">
+<Title/>
 
-      <div className="">
- <h1 className="">My Stack</h1>
+
 <JournalInput/>
-      </div>
+
     </main>
   );
 }

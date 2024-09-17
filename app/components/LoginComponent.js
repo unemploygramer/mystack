@@ -60,11 +60,12 @@ const LoginComponent = () => {
   };
 
   return (
-    <div className="mt-8 w-[90vw] rounded-[7%] border-4 border-violet-500 max-w-md mx-auto bg-violet-950  text-white p-8 shadow-lg rounded-lg ">
-      <h2 className="text-3xl font-semibold mb-6 text-center">Login</h2>
+    <div className="w-full   flex justify-center mt-4 ">
+    <div className="w-[90%]  max-w-[350px]">
+      <h2 className="text-3xl font-semibold mb-6 text-center text-black ">Login</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="email" className="text-sm text-white-300">
+        <div className="mb-4 flex flex-col items-center mt-2">
+          <label htmlFor="email" className="text-sm  text-black">
             Email:
           </label>
           <input
@@ -72,12 +73,12 @@ const LoginComponent = () => {
             id="email"
             value={email}
             onChange={handleEmailChange}
-            className="mt-1 p-2 w-full border rounded-md bg-violet-900 text-white focus:outline-none focus:border-blue-500"
+            className="mt-1 p-2 w-full border rounded-md bg-orange-400  focus:outline-none focus:border-blue-500 w-[80%]"
             required
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="password" className="text-sm text-white-300">
+        <div className="mb-4 flex flex-col items-center mt-2">
+          <label htmlFor="password" className="text-sm text-black ">
             Password:
           </label>
           <input
@@ -85,14 +86,14 @@ const LoginComponent = () => {
             id="password"
             value={password}
             onChange={handlePasswordChange}
-            className="mt-1 p-2 w-full border rounded-md bg-violet-900 text-white focus:outline-none focus:border-blue-500"
+            className="mt-1 p-2 w-full border rounded-md bg-orange-400  focus:outline-none focus:border-blue-500 w-[80%]"
             required
           />
         </div>
-        <div className="mb-6">
+        <div className="mb-6  flex justify-center">
           <button
             type="submit"
-            className="bg-violet-500 text-white p-2 rounded w-full hover:bg-violet-700 focus:outline-none focus:shadow-outline-blue"
+            className="bg-orange-500 w-24 font-bold  p-3 rounded w-full hover:bg-orange-300 focus:outline-none focus:shadow-outline-blue"
           >
             Log In
           </button>
@@ -103,11 +104,12 @@ const LoginComponent = () => {
           {error}
         </h2>
       </div>
-      <div className="text-center text-white-300">
-        <p className="mb-4">Don't have an account?</p>
-        <Link href="/SignUp" className=" bg-violet-400 rounded p-2 m-4 text-black hover:underline">
+      <div className="text-center ">
+        <p className="mb-4 text-black">Don't have an account?</p>
+        <Link href="/SignUp" className=" bg-orange-400 rounded p-2 m-4 text-black hover:underline">
           Sign Up
         </Link>
+      </div>
       </div>
     </div>
   );

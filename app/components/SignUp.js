@@ -111,11 +111,12 @@ import { signIn } from 'next-auth/react';
   };
 
   return (
-    <div className="mt-24 w-[90vw] rounded-[7%] border-4 border-violet-500 max-w-md mx-auto bg-violet-950  text-white p-8 shadow-lg rounded-lg ">
-      <h2 className="text-3xl font-semibold mb-6 text-center">Sign Up</h2>
+    <div className=" w-full   flex justify-center mt-4">
+    <div className="w-[90%]  max-w-[350px]">
+      <h2 className="text-3xl font-semibold  text-center ">Sign Up</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="email" className="text-sm text-white-300">
+        <div className="mb-4 flex flex-col items-center mt-2">
+          <label htmlFor="email" className="text-sm text-white-300 ">
             Email:
           </label>
           <input
@@ -123,12 +124,12 @@ import { signIn } from 'next-auth/react';
             id="email"
             value={email}
             onChange={handleEmailChange}
-            className="mt-1 p-2 w-full border rounded-md bg-violet-900 text-white focus:outline-none focus:border-blue-500"
+            className="mt-1 p-2 w-full border rounded-md bg-orange-400  focus:outline-none focus:border-blue-500 w-[80%]"
             required
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="password" className="text-sm text-white-300">
+        <div className="mb-4 flex flex-col items-center mt-2">
+          <label htmlFor="password" className="text-sm ">
             Password:
           </label>
           <input
@@ -136,14 +137,14 @@ import { signIn } from 'next-auth/react';
             id="password"
             value={password}
             onChange={handlePasswordChange}
-            className="mt-1 p-2 w-full border rounded-md bg-violet-900 text-white focus:outline-none focus:border-blue-500"
+            className="mt-1 p-2 w-full border rounded-md bg-orange-400  focus:outline-none focus:border-blue-500 w-[80%]"
             required
           />
         </div>
-        <div className="mb-6">
+        <div className="mb-6 flex justify-center">
           <button
             type="submit"
-            className="bg-violet-500 text-white p-2 rounded w-full hover:bg-violet-700 focus:outline-none focus:shadow-outline-blue"
+            className="bg-orange-500 font-bold w-24  p-2 rounded w-full hover:bg-orange-700 focus:outline-none focus:shadow-outline-blue"
           >
             Sign Up
           </button>
@@ -156,9 +157,10 @@ import { signIn } from 'next-auth/react';
       </div>
       <div className="text-center text-white-300">
         <p className="mb-4">Already have an account?</p>
-        <Link href="/login" className=" bg-violet-400 rounded p-2 m-4 text-black hover:underline">
+        <Link href="/login" className=" bg-orange-400 rounded p-2 m-4 text-black hover:underline">
           Login
         </Link>
+      </div>
       </div>
     </div>
   );

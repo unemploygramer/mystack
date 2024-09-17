@@ -4,12 +4,14 @@ import {redirect} from "next/navigation"
 import { getServerSession } from 'next-auth'
 //import { authOptions } from "../api/auth/[...nextauth]/route"
 import authOptions from "../../utils/authOptions";
+import Title from "../components/Title"
 
 async function page() {
   const session = await getServerSession(authOptions);
 console.log(session,"session")
   return (
-    <div>
+    <div className="animate-slideIn ">
+    <Title />
         <SignUp/>
     </div>
   )
