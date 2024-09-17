@@ -73,7 +73,7 @@ const LoginComponent = () => {
             id="email"
             value={email}
             onChange={handleEmailChange}
-            className="mt-1 p-2 w-full border rounded-md bg-orange-400  focus:outline-none focus:border-blue-500 w-[80%]"
+            className="mt-1 p-2 w-full border rounded-md bg-orange-400  focus:outline-none focus:border-blue-500 w-[75%]"
             required
           />
         </div>
@@ -86,14 +86,14 @@ const LoginComponent = () => {
             id="password"
             value={password}
             onChange={handlePasswordChange}
-            className="mt-1 p-2 w-full border rounded-md bg-orange-400  focus:outline-none focus:border-blue-500 w-[80%]"
+            className="mt-1 p-2 w-full border rounded-md bg-orange-400  focus:outline-none focus:border-blue-500 w-[75%]"
             required
           />
         </div>
         <div className="mb-6  flex justify-center">
           <button
             type="submit"
-            className="bg-orange-500 w-24 font-bold  p-3 rounded w-full hover:bg-orange-300 focus:outline-none focus:shadow-outline-blue"
+            className="bg-orange-500 w-24 font-bold  p-3 rounded  hover:bg-orange-300 focus:outline-none focus:shadow-outline-blue"
           >
             Log In
           </button>
@@ -104,7 +104,7 @@ const LoginComponent = () => {
           {error}
         </h2>
       </div>
-      <div className="text-center ">
+      <div className="text-center h-24 ">
         <p className="mb-4 text-black">Don't have an account?</p>
         <Link href="/SignUp" className=" bg-orange-400 rounded p-2 m-4 text-black hover:underline">
           Sign Up

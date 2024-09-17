@@ -10,9 +10,11 @@ async function page() {
   const session = await getServerSession(authOptions);
 console.log(session,"session")
   return (
-    <div className="animate-slideIn ">
+    <div className="  overflow-x-hidden ">
+    <div className=" animate-slideIn">
     <Title />
         <SignUp/>
+        </div>
     </div>
   )
 }

@@ -115,7 +115,7 @@ import { signIn } from 'next-auth/react';
     <div className="w-[90%]  max-w-[350px]">
       <h2 className="text-3xl font-semibold  text-center ">Sign Up</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4 flex flex-col items-center mt-2">
+        <div className="mb-4 flex flex-col items-center mt-2 ">
           <label htmlFor="email" className="text-sm text-white-300 ">
             Email:
           </label>
@@ -124,7 +124,7 @@ import { signIn } from 'next-auth/react';
             id="email"
             value={email}
             onChange={handleEmailChange}
-            className="mt-1 p-2 w-full border rounded-md bg-orange-400  focus:outline-none focus:border-blue-500 w-[80%]"
+            className="mt-1 p-2 w-[80%] border rounded-md bg-orange-400  focus:outline-none focus:border-blue-500 "
             required
           />
         </div>
@@ -137,14 +137,14 @@ import { signIn } from 'next-auth/react';
             id="password"
             value={password}
             onChange={handlePasswordChange}
-            className="mt-1 p-2 w-full border rounded-md bg-orange-400  focus:outline-none focus:border-blue-500 w-[80%]"
+            className="mt-1 p-2  border rounded-md bg-orange-400  focus:outline-none focus:border-blue-500 w-[80%]"
             required
           />
         </div>
         <div className="mb-6 flex justify-center">
           <button
             type="submit"
-            className="bg-orange-500 font-bold w-24  p-2 rounded w-full hover:bg-orange-700 focus:outline-none focus:shadow-outline-blue"
+            className="bg-orange-500 font-bold w-24  p-2 rounded hover:bg-orange-700 focus:outline-none focus:shadow-outline-blue"
           >
             Sign Up
           </button>
@@ -155,9 +155,9 @@ import { signIn } from 'next-auth/react';
           {error}
         </h2>
       </div>
-      <div className="text-center text-white-300">
+      <div className="text-center text-white-300 h-24 ">
         <p className="mb-4">Already have an account?</p>
-        <Link href="/login" className=" bg-orange-400 rounded p-2 m-4 text-black hover:underline">
+        <Link href="/login" className=" bg-orange-400 rounded p-2 m-4 text-black hover:underline ">
           Login
         </Link>
       </div>
