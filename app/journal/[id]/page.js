@@ -40,9 +40,9 @@ async function page({params}) {
   const journal = data.userJournals[0];
     const session = await getServerSession(authOptions);
     console.log(session, "the session");
-    if (!session) {
-      redirect('/login')
-    }
+//    if (!session) {
+//      redirect('/login')
+//    }
 
   return (
   <div className="container mx-auto px-4 py-8 mt-24">

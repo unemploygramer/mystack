@@ -117,6 +117,19 @@ console.log(makeJournalPayload,"the makeJournalPayload")
 
         setData(data);
         };
+ const affirmation = affirmationBody.affirmation;
+    const updateAffirmation = await fetch('/api/saveAffirmation', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({id: journalEntry.journalEntry._id, affirmation: affirmation})
+    });
+    if (updateAffirmation.ok) {
+          router.replace(`/journal/${journalEntry.journalEntry._id}` );
+
+
+    }
       } catch (error) {
         console.error('Failed to fetch profile data:', error);
 
