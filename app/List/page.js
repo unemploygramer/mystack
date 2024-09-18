@@ -40,21 +40,24 @@ async function page() {
   console.log(data,"the data")
 
   return (
-    <div className="container mx-auto px-4 py-8 mt-24">
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
-        {data && data.userJournals && data.userJournals.map((journal) => (
+  <div className="container mx-auto px-4 py-8 mt-24">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3  ">
+
+      {data && data.userJournals && data.userJournals.map((journal) => (
         <Link href="/journal/[id]" as={`/journal/${journal._id}`}>
-          <div key={journal._id} className="bg-violet-950 shadow overflow-hidden sm:rounded-lg p-6">
-            <h2 className="text-md font-bold text-white">{journal.text}</h2>
-            <div className="bg-violet-900 p-2 rounded mt-4 mb-4">
+          <div key={journal._id} className="rounded-xl overflow-hidden sm:rounded-lg p-6 bg-white shadow-lg hover:shadow-xl transition-shadow duration-200 ease-in-out cursor-pointer bg-orange-300  ">
+<h2 className="text-md font-bold text-gray-800">{journal.text.length > 30 ? journal.text.substring(0, 30) + '...' : journal.text}</h2>            <div className=" flex justify-center">
+            <div className="bg-amber-600 p-2 rounded mt-4 mb-4 shadow-inner text-center rounded-xl max-w-[450px] ">
               <p className="text-gray-200 text-2xl ">{journal.affirmation}</p>
             </div>
-            <p className="text-sm text-gray-300">{new Date(journal.date).toLocaleDateString()}</p>
+            </div>
+            <p className="text-sm ">{new Date(journal.date).toLocaleDateString()}</p>
           </div>
         </Link>
-        ))}
-      </div>
+      ))}
+
     </div>
+  </div>
   );
 }
 
