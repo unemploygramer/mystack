@@ -96,7 +96,14 @@ console.log(makeJournalPayload,"the makeJournalPayload")
     body: JSON.stringify({affirmation: text})
   });
     const affirmationBody = await response.json();
-
+ const affirmation = affirmationBody.affirmation;
+   const updateAffirmation = await fetch('/api/saveAffirmation', {
+       method: 'PATCH',
+       headers: {
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify({id: journalEntry.journalEntry._id, affirmation: affirmation})
+     });
     // Subtract one credit
     if(session!==null && session.user!==null) {
    const tookCreds = await  fetch(`/api/takeCredits/${session.user.email}`, { method: 'POST' });
@@ -109,22 +116,19 @@ console.log(makeJournalPayload,"the makeJournalPayload")
       body: JSON.stringify({id: journalEntry.journalEntry._id, affirmation: affirmation})
     });
     if (updateAffirmation.ok) {
+    console.log("affirmation updated successfully inside session")
           router.replace(`/journal/${journalEntry.journalEntry._id}` );
 
-
     }
+console.log("affirmation updated successfully inside outside")
+console.log(journalEntry.journalEntry._id,"journalEntry.journalEntry._id")
 
 
-        setData(data);
+       return    router.replace(`/journal/${journalEntry.journalEntry._id}` );
+
+
         };
- const affirmation = affirmationBody.affirmation;
-    const updateAffirmation = await fetch('/api/saveAffirmation', {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({id: journalEntry.journalEntry._id, affirmation: affirmation})
-    });
+
     if (updateAffirmation.ok) {
           router.replace(`/newJournal/${journalEntry.journalEntry._id}` );
 
@@ -138,14 +142,6 @@ console.log(makeJournalPayload,"the makeJournalPayload")
     };
 
 
-  useEffect(() => {
-
-
-
-  }, [text]);
-    //  if (!session) {
-    //    redirect('/login')
-    //  }
 
 
 

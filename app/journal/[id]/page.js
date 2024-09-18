@@ -43,15 +43,11 @@ async function page({params}) {
     console.log(session, "the session");
    let userId;
 
-   if (typeof window !== 'undefined') {
-     userId = window.localStorage.getItem("userId");
 
-
-   }
    console.log(userId,"the userId")
-    if (!session) {
-      redirect('/login')
-    }
+//    if (!session) {
+//      redirect('/login')
+//    }
 
   return (
   <div className="container mx-auto px-4 py-8 mt-24">
