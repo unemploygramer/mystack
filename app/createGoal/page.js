@@ -4,7 +4,7 @@ async function page() {
 
 
   return (
-  <div className="mt-[110px]">
+  <div className="mt-[90px]">
   <CreateGoal />
   </div>
   )

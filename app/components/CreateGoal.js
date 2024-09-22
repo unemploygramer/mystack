@@ -12,8 +12,17 @@ export default function CreateGoal() {
   const [isLoading, setIsLoading] = useState(false); // New state for loading
   const [newVerb, setNewVerb] = useState(''); // New state for the input value
 const [taskHours, setTaskHours] = useState([]);
-const [totalHours, setTotalHours] = useState(0);
-const [availableHours, setAvailableHours] = useState(null);
+const [totalHours, setTotalHours] = useState(null)
+;const [availableHours, setAvailableHours] = useState(null);
+const [isTotalHoursFormSubmitted, setIsTotalHoursFormSubmitted] = useState(false);
+const [currentProgress, setCurrentProgress] = useState('');
+
+const handleTotalHoursSubmission = (e) => {
+  e.preventDefault(); // Prevent the default form submission
+  setTotalHours(Number(e.target.totalHours.value)); // Set the total hours to the input value
+  setAvailableHours(Number(e.target.totalHours.value)); // Set the available hours to the input value
+  setIsTotalHoursFormSubmitted(true); // Set isTotalHoursFormSubmitted to true
+};
 
   const fetchData = async (e) => {
     e.preventDefault();
@@ -44,9 +53,35 @@ const [availableHours, setAvailableHours] = useState(null);
     setVerbs([newVerb,...verbs]);
     setNewVerb('');
   };
+const submitProgress = async (e) => {
+
+    e.preventDefault();
+    console.log("Total hours: ", totalHours);
+    console.log("Current progress: ", currentProgress);
+    handleTotalHoursSubmission(e);
+        const aiResponse = await fetch('/api/submitGoalParams', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+  body: JSON.stringify({
+    renderedGoal: renderedGoal,
+    verbs: verbs,
+    totalHours: totalHours,
+    currentProgress: currentProgress
+  })
+        });
+
+        if (aiResponse.ok) {
+          const data = await aiResponse.json();
+console.log(data,"the data in the submitGoalParams route")
+        }
+  };
+
+
   return(
   <div className="flex justify-center flex-col items-center">
-    <h1 className="text-3xl">Create 12 Month Goal</h1>
+    <h1 className="text-3xl">12 Week Goal</h1>
 
     {isLoading ? (
       <LoadingSpinner />
@@ -76,10 +111,16 @@ const [availableHours, setAvailableHours] = useState(null);
             case 'verb':
               return (
                    <div className="">
-                     <h2 className="text-xl text-center mt-4">{renderedGoal}</h2>
-                     <h2 className="text-xl text-center mt-4">Add all the actions needed to make the goal.</h2>
-                     <div className=" w-screen flex justify-center  flex-col items-center">
-                       <ul className="bg-gray-800 w-[90vw] max-w-[300px] h-[270px] mt-12 overflow-auto rounded-xl ">
+                   <div className="flex  justify-center">
+
+<h2 className="text-xl text-center mt-4 bg-orange-400 p-2 font-bold rounded-xl border-4 border-orange-500">
+                     {renderedGoal
+                     }</h2>
+                     </div>
+                                          <div className=" w-screen flex justify-center  flex-col items-center  p-4">
+<div className="bg-gray-300 flex flex-col items-center p-4 rounded-xl w-[90vw] max-w-[500px] border-2 border-gray-400 shadow-lg">
+                     <h2 className="text-xl text-center mt-4 font-bold">Add all the actions needed to make the goal.</h2>
+                       <ul className="bg-gray-800 w-[90vw] max-w-[300px] h-[270px] mt-4 overflow-auto rounded-xl ">
                          {verbs.map((verb, index) => (
                            <li key={index} className="bg-orange-400 p-2 m-2 rounded-md">
                              <button
@@ -109,38 +150,48 @@ const [availableHours, setAvailableHours] = useState(null);
                             </div>
                        </form>
 </div>
-// Add onClick event handler to the button
 <button
   className="bg-orange-600 mt-4 text-black  font-bold w-24 rounded flex justify-center items-center"
   onClick={() => setStep('timeAllocation')}
 >
   <FaLongArrowAltRight  className="text-4xl"/>
 </button>
-
+</div>
                      </div>
                    </div>
               );
 case 'timeAllocation':
   return (
     <>
-            <label htmlFor="totalHours" className="text-xl text-center mt-4">
-              Total hours:
-            </label>
-<form onSubmit={(e) => {
-  e.preventDefault(); // Prevent the default form submission
-  setTotalHours(Number(e.target.totalHours.value)); // Set the total hours to the input value
-}}>
+    {isTotalHoursFormSubmitted ? (
+      <div>Hello</div>
+    ) : (
+      <>
+<form onSubmit={submitProgress}>
+  <label htmlFor="totalHours" className="text-xl text-center mt-4">
+    Total hours you would like to commit to your goal goal:
+  </label>
   <input
     id="totalHours"
     type="number"
     min="0"
-    value={totalHours}
+    value={totalHours || ''}
     onChange={(e) => setTotalHours(Number(e.target.value))}
+    className="p-2 mb-2 bg-orange-200 rounded"
+  />
+  <label htmlFor="currentProgress" className="text-xl text-center mt-4">
+    Current progress towards your goal:
+  </label>
+  <textarea
+    id="currentProgress"
+    value={currentProgress || ''}
+    onChange={(e) => setCurrentProgress(e.target.value)}
     className="p-2 mb-2 bg-orange-200 rounded"
   />
   <button type="submit">Submit</button>
 </form>
-
+      </>
+    )}
       <div className="mt-4">
         {taskHours.map((taskHour, index) => (
           <div key={index} className="bg-orange-200 p-2 rounded mt-2">
