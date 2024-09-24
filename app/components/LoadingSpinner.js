@@ -9,7 +9,7 @@ export default function LoadingSpinner ()  {
           <div className="absolute w-12 h-12 bg-gray-500 transform   rotate-225 origin-center animate-spinner bottom-0 left-0"></div>
           <div className="absolute w-12 h-12 bg-orange-500 transform   rotate-315 origin-center animate-spinner bottom-0 right-0"></div>
         </div>
-        <div className="mt-24 text-3xl text-slate-200 z-40">Loading...</div>
+        <div className="mt-24 text-3xl  z-40">Loading...</div>
     </div>
   );
 };

@@ -16,6 +16,14 @@ const [totalHours, setTotalHours] = useState(null)
 ;const [availableHours, setAvailableHours] = useState(null);
 const [isTotalHoursFormSubmitted, setIsTotalHoursFormSubmitted] = useState(false);
 const [currentProgress, setCurrentProgress] = useState('');
+const [goalAdvice, setGoalAdvice] = useState(null); // New state for the advice
+//const [goalAdvice, setGoalAdvice] = useState({
+//                                               "helpfulAdvice": "Consistency is key. Try to work on your goal a little bit every day.",
+//                                               "tip1": "Break down your goal into smaller, manageable tasks.",
+//                                               "tip2": "Set specific times during the day to work on your tasks.",
+//                                               "tip3": "Track your progress and celebrate small victories along the way."
+//                                             }); // New state for the advice
+
 
 const handleTotalHoursSubmission = (e) => {
   e.preventDefault(); // Prevent the default form submission
@@ -54,30 +62,29 @@ const handleTotalHoursSubmission = (e) => {
     setNewVerb('');
   };
 const submitProgress = async (e) => {
+  e.preventDefault();
+  setIsLoading(true); // Show loading spinner
+  handleTotalHoursSubmission(e);
+  const aiResponse = await fetch('/api/submitGoalParams', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      renderedGoal: renderedGoal,
+      verbs: verbs,
+      totalHours: totalHours,
+      currentProgress: currentProgress
+    })
+  });
 
-    e.preventDefault();
-    console.log("Total hours: ", totalHours);
-    console.log("Current progress: ", currentProgress);
-    handleTotalHoursSubmission(e);
-        const aiResponse = await fetch('/api/submitGoalParams', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-  body: JSON.stringify({
-    renderedGoal: renderedGoal,
-    verbs: verbs,
-    totalHours: totalHours,
-    currentProgress: currentProgress
-  })
-        });
-
-        if (aiResponse.ok) {
-          const data = await aiResponse.json();
-console.log(data,"the data in the submitGoalParams route")
-        }
-  };
-
+  if (aiResponse.ok) {
+    const data = await aiResponse.json();
+    setGoalAdvice(data); // Set the goalAdvice state with the received data
+    setStep('advice'); // Change the step to 'advice'
+  }
+  setIsLoading(false); // Hide loading spinner
+};
 
   return(
   <div className="flex justify-center flex-col items-center">
@@ -160,48 +167,110 @@ console.log(data,"the data in the submitGoalParams route")
                      </div>
                    </div>
               );
+                  case 'advice':
+                    return (
+                      <div className="bg-orange-200 p-5 rounded-md">
+                        <h2 className="text-gray-700 mb-2">Goal Advice</h2>
+                        <p className="mb-2"><strong>Advice:</strong> {goalAdvice.helpfulAdvice}</p>
+                        <p className="mb-2"><strong>Tip 1:</strong> {goalAdvice.tip1}</p>
+                        <p className="mb-2"><strong>Tip 2:</strong> {goalAdvice.tip2}</p>
+                        <p className="mb-2"><strong>Tip 3:</strong> {goalAdvice.tip3}</p>
+                        <button
+                          className="bg-blue-500 text-white rounded p-2 px-4 mt-4"
+                          onClick={() => setStep('taskAllocation')}
+                        >
+                          Proceed to Task Allocation
+                        </button>
+                      </div>
+                    );
 case 'timeAllocation':
-  return (
-    <>
-    {isTotalHoursFormSubmitted ? (
-      <div>Hello</div>
-    ) : (
-      <>
-<form onSubmit={submitProgress}>
-  <label htmlFor="totalHours" className="text-xl text-center mt-4">
-    Total hours you would like to commit to your goal goal:
-  </label>
-  <input
-    id="totalHours"
-    type="number"
-    min="0"
-    value={totalHours || ''}
-    onChange={(e) => setTotalHours(Number(e.target.value))}
-    className="p-2 mb-2 bg-orange-200 rounded"
-  />
-  <label htmlFor="currentProgress" className="text-xl text-center mt-4">
-    Current progress towards your goal:
-  </label>
-  <textarea
-    id="currentProgress"
-    value={currentProgress || ''}
-    onChange={(e) => setCurrentProgress(e.target.value)}
-    className="p-2 mb-2 bg-orange-200 rounded"
-  />
-  <button type="submit">Submit</button>
-</form>
-      </>
-    )}
-      <div className="mt-4">
-        {taskHours.map((taskHour, index) => (
-          <div key={index} className="bg-orange-200 p-2 rounded mt-2">
-            <span>{taskHour.task}: </span>
-            <span>{taskHour.hours} hours</span>
-          </div>
-        ))}
-      </div>
-    </>
-  );
+return (
+  <>
+    <form onSubmit={submitProgress}>
+      <label htmlFor="totalHours" className="text-xl text-center mt-4">
+        Total hours you would like to commit to your goal goal:
+      </label>
+      <input
+        id="totalHours"
+        type="number"
+        min="0"
+        value={totalHours || ''}
+        onChange={(e) => setTotalHours(Number(e.target.value))}
+        className="p-2 mb-2 bg-orange-200 rounded"
+      />
+      <label htmlFor="currentProgress" className="text-xl text-center mt-4">
+        Current progress towards your goal:
+      </label>
+      <textarea
+        id="currentProgress"
+        value={currentProgress || ''}
+        onChange={(e) => setCurrentProgress(e.target.value)}
+        className="p-2 mb-2 bg-orange-200 rounded"
+      />
+      <button type="submit">Submit</button>
+    </form>
+{goalAdvice && (
+  <div className="bg-orange-200 p-5 rounded-md">
+    <h2 className="text-gray-700 mb-2">Goal Advice</h2>
+    <p className="mb-2"><strong>Advice:</strong> {goalAdvice.helpfulAdvice}</p>
+    <p className="mb-2"><strong>Tip 1:</strong> {goalAdvice.tip1}</p>
+    <p className="mb-2"><strong>Tip 2:</strong> {goalAdvice.tip2}</p>
+    <p className="mb-2"><strong>Tip 3:</strong> {goalAdvice.tip3}</p>
+  </div>
+)}
+
+
+  </>
+);
+    case 'taskAllocation':
+      return (
+        <div className="mt-4">
+          {taskHours.map((taskHour, index) => (
+            <div key={index} className="bg-orange-200 p-2 rounded mt-2">
+              <span>{taskHour.task}: </span>
+              <span>{taskHour.hours} hours</span>
+            </div>
+          ))}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const hours = Array.from(e.target.elements)
+                .filter((element) => element.name === 'taskHours')
+                .map((input) => Number(input.value));
+              const total = hours.reduce((a, b) => a + b, 0);
+              if (total > totalHours) {
+                alert('The sum of the allocated hours cannot exceed the total hours.');
+                return;
+              }
+              setTaskHours(
+                verbs.map((verb, index) => ({
+                  task: verb,
+                  hours: hours[index],
+                }))
+              );
+            }}
+            className="flex flex-col items-center w-[90vw] max-w-[400px] mt-8 p-2 bg-orange-300 mt-4"
+          >
+            <label htmlFor="hoursPerWeek" className="text-xl text-center mt-4">
+              Allocate hours to each task:
+            </label>
+            {verbs.map((verb, index) => (
+              <div key={index} className="flex justify-between items-center w-full mt-2">
+                <span>{verb}</span>
+                <input
+                  name="taskHours"
+                  type="number"
+                  min="0"
+                  className="p-2 mb-2 bg-orange-200 rounded"
+                />
+              </div>
+            ))}
+            <button type="submit" className="bg-blue-500 text-white rounded p-2 px-4 mt-4">
+              Submit
+            </button>
+          </form>
+        </div>
+      );
             // Add more cases for additional steps here
             default:
               return null;

@@ -21,9 +21,21 @@ const tools = [
                     helpfulAdvice: {
                         type: "string",
                         description: "advice on how to achieve a goal"
+                    },
+                    tip1: {
+                        type: "string",
+                        description: "first helpful tip"
+                    },
+                    tip2: {
+                        type: "string",
+                        description: "second helpful tip"
+                    },
+                    tip3: {
+                        type: "string",
+                        description: "third helpful tip"
                     }
                 },
-                required: ["helpfulAdvice"]
+                required: ["helpfulAdvice", "tip1", "tip2", "tip3"]
             }
         }
     }
