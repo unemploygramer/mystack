@@ -33,9 +33,13 @@ const tools = [
                     tip3: {
                         type: "string",
                         description: "third helpful tip"
+                    },
+                    week1Goal: {
+                        type: "string",
+                        description: "suggested goal that is specific,measurable, achievable, and relevant for the first week of the goal phrased in the first person future tense."
                     }
                 },
-                required: ["helpfulAdvice", "tip1", "tip2", "tip3"]
+                required: ["helpfulAdvice", "tip1", "tip2", "tip3", "week1Goal"]
             }
         }
     }

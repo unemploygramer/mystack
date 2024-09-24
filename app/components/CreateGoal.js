@@ -17,6 +17,7 @@ const [totalHours, setTotalHours] = useState(null)
 const [isTotalHoursFormSubmitted, setIsTotalHoursFormSubmitted] = useState(false);
 const [currentProgress, setCurrentProgress] = useState('');
 const [goalAdvice, setGoalAdvice] = useState(null); // New state for the advice
+const [suggestedGoal, setSuggestedGoal] = useState('');
 //const [goalAdvice, setGoalAdvice] = useState({
 //                                               "helpfulAdvice": "Consistency is key. Try to work on your goal a little bit every day.",
 //                                               "tip1": "Break down your goal into smaller, manageable tasks.",
@@ -81,11 +82,11 @@ const submitProgress = async (e) => {
   if (aiResponse.ok) {
     const data = await aiResponse.json();
     setGoalAdvice(data); // Set the goalAdvice state with the received data
+    setSuggestedGoal(data.week1Goal); // Set the suggestedGoal state with the week1Goal from the received data
     setStep('advice'); // Change the step to 'advice'
   }
   setIsLoading(false); // Hide loading spinner
 };
-
   return(
   <div className="flex justify-center flex-col items-center">
     <h1 className="text-3xl">12 Week Goal</h1>
@@ -159,7 +160,7 @@ const submitProgress = async (e) => {
 </div>
 <button
   className="bg-orange-600 mt-4 text-black  font-bold w-24 rounded flex justify-center items-center"
-  onClick={() => setStep('timeAllocation')}
+  onClick={() => setStep('currentProgress')}
 >
   <FaLongArrowAltRight  className="text-4xl"/>
 </button>
@@ -167,37 +168,58 @@ const submitProgress = async (e) => {
                      </div>
                    </div>
               );
-                  case 'advice':
-                    return (
-                      <div className="bg-orange-200 p-5 rounded-md">
-                        <h2 className="text-gray-700 mb-2">Goal Advice</h2>
-                        <p className="mb-2"><strong>Advice:</strong> {goalAdvice.helpfulAdvice}</p>
-                        <p className="mb-2"><strong>Tip 1:</strong> {goalAdvice.tip1}</p>
-                        <p className="mb-2"><strong>Tip 2:</strong> {goalAdvice.tip2}</p>
-                        <p className="mb-2"><strong>Tip 3:</strong> {goalAdvice.tip3}</p>
-                        <button
-                          className="bg-blue-500 text-white rounded p-2 px-4 mt-4"
-                          onClick={() => setStep('taskAllocation')}
-                        >
-                          Proceed to Task Allocation
-                        </button>
-                      </div>
-                    );
-case 'timeAllocation':
+case 'advice':
+  return (
+    <div className="bg-orange-200 p-5 rounded-md">
+      <h2 className="text-gray-700 mb-2">Goal Advice</h2>
+      <p className="mb-2"><strong>Advice:</strong> {goalAdvice.helpfulAdvice}</p>
+      <p className="mb-2"><strong>Tip 1:</strong> {goalAdvice.tip1}</p>
+      <p className="mb-2"><strong>Tip 2:</strong> {goalAdvice.tip2}</p>
+      <p className="mb-2"><strong>Tip 3:</strong> {goalAdvice.tip3}</p>
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        console.log(suggestedGoal);
+      }}>
+        <label htmlFor="week1Goal" className="text-xl text-center mt-4">
+          Week 1 Goal:
+        </label>
+        <input
+          id="week1Goal"
+          value={goalAdvice.week1Goal}
+          onChange={(e) => setSuggestedGoal(e.target.value)}
+          className="p-2 mb-2 bg-orange-200 rounded"
+        />
+        <button type="submit">Submit</button>
+      </form>
+      <button
+        className="bg-blue-500 text-white rounded p-2 px-4 mt-4"
+        onClick={() => setStep('taskAllocation')}
+      >
+        Proceed to Task Allocation
+      </button>
+    </div>
+  );
+case 'currentProgress':
 return (
   <>
-    <form onSubmit={submitProgress}>
-      <label htmlFor="totalHours" className="text-xl text-center mt-4">
-        Total hours you would like to commit to your goal goal:
-      </label>
-      <input
-        id="totalHours"
-        type="number"
-        min="0"
-        value={totalHours || ''}
-        onChange={(e) => setTotalHours(Number(e.target.value))}
-        className="p-2 mb-2 bg-orange-200 rounded"
-      />
+    <form
+    onSubmit={submitProgress}
+
+
+
+    >
+                  <label htmlFor="totalHours" className="text-xl text-center mt-4">
+                    Total hours you would like to commit to your goal goal:
+                  </label>
+                  <input
+                    id="totalHours"
+                    type="number"
+                    min="0"
+                    value={totalHours || ''}
+                    onChange={(e) => setTotalHours(Number(e.target.value))}
+                    className="p-2 mb-2 bg-orange-200 rounded"
+                  />
+
       <label htmlFor="currentProgress" className="text-xl text-center mt-4">
         Current progress towards your goal:
       </label>
@@ -225,12 +247,18 @@ return (
     case 'taskAllocation':
       return (
         <div className="mt-4">
-          {taskHours.map((taskHour, index) => (
-            <div key={index} className="bg-orange-200 p-2 rounded mt-2">
-              <span>{taskHour.task}: </span>
-              <span>{taskHour.hours} hours</span>
-            </div>
-          ))}
+              <label htmlFor="totalHours" className="text-xl text-center mt-4">
+                Total hours you would like to commit to your goal goal:
+              </label>
+              <input
+                id="totalHours"
+                type="number"
+                min="0"
+                value={totalHours || ''}
+                onChange={(e) => setTotalHours(Number(e.target.value))}
+                className="p-2 mb-2 bg-orange-200 rounded"
+              />
+
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -238,6 +266,7 @@ return (
                 .filter((element) => element.name === 'taskHours')
                 .map((input) => Number(input.value));
               const total = hours.reduce((a, b) => a + b, 0);
+              setStep("currentProgress")
               if (total > totalHours) {
                 alert('The sum of the allocated hours cannot exceed the total hours.');
                 return;
