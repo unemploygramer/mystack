@@ -18,6 +18,7 @@ const [isTotalHoursFormSubmitted, setIsTotalHoursFormSubmitted] = useState(false
 const [currentProgress, setCurrentProgress] = useState('');
 const [goalAdvice, setGoalAdvice] = useState(null); // New state for the advice
 const [suggestedGoal, setSuggestedGoal] = useState('');
+const [goalOfTheDay, setGoalOfTheDay] = useState("");
 //const [goalAdvice, setGoalAdvice] = useState({
 //                                               "helpfulAdvice": "Consistency is key. Try to work on your goal a little bit every day.",
 //                                               "tip1": "Break down your goal into smaller, manageable tasks.",
@@ -31,6 +32,33 @@ const handleTotalHoursSubmission = (e) => {
   setTotalHours(Number(e.target.totalHours.value)); // Set the total hours to the input value
   setAvailableHours(Number(e.target.totalHours.value)); // Set the available hours to the input value
   setIsTotalHoursFormSubmitted(true); // Set isTotalHoursFormSubmitted to true
+};
+
+const getGoalOfTheDay = async () => {
+  setIsLoading(true); // Set loading to true
+
+  const response = await fetch('/api/createDailyGoal', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      renderedGoal: renderedGoal,
+      verbs: verbs,
+      totalHours: totalHours,
+      currentProgress: currentProgress,
+      week1Goal: suggestedGoal
+    })
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    setGoalOfTheDay(data.goalOfTheDay);
+  } else {
+    // Handle error here
+  }
+
+  setIsLoading(false); // Set loading to false
 };
 
   const fetchData = async (e) => {
@@ -183,20 +211,21 @@ case 'advice':
         <label htmlFor="week1Goal" className="text-xl text-center mt-4">
           Week 1 Goal:
         </label>
-        <input
+        <textarea
           id="week1Goal"
           value={goalAdvice.week1Goal}
           onChange={(e) => setSuggestedGoal(e.target.value)}
-          className="p-2 mb-2 bg-orange-200 rounded"
+          className="p-2 mb-2 bg-orange-100 rounded w-full h-24"
         />
         <button type="submit">Submit</button>
       </form>
-      <button
-        className="bg-blue-500 text-white rounded p-2 px-4 mt-4"
-        onClick={() => setStep('taskAllocation')}
-      >
-        Proceed to Task Allocation
-      </button>
+<button
+  className="bg-blue-500 text-white rounded p-2 px-4 mt-4"
+  onClick={getGoalOfTheDay}
+  disabled={isLoading} // Disable the button while loading
+>
+  {isLoading ? 'Loading...' : 'Proceed to Task Allocation'}
+</button>
     </div>
   );
 case 'currentProgress':

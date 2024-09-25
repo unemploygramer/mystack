@@ -18,28 +18,13 @@ const tools = [
             parameters: {
                 type: "object",
                 properties: {
-                    helpfulAdvice: {
+
+                    goalOfTheDay: {
                         type: "string",
-                        description: "advice on how to achieve a goal"
-                    },
-                    tip1: {
-                        type: "string",
-                        description: "first helpful tip"
-                    },
-                    tip2: {
-                        type: "string",
-                        description: "second helpful tip"
-                    },
-                    tip3: {
-                        type: "string",
-                        description: "third helpful tip"
-                    },
-                    week1Goal: {
-                        type: "string",
-                        description: "suggested goal that is specific,measurable, achievable, and relevant for the first week of the goal phrased in the first person future tense. do not break the goal into daily steps just give a goal for the week."
+                        description: "suggested goal of the day that is specific,measurable, achievable, and relevant for the first week of the goal phrased in the first person future tense."
                     }
                 },
-                required: ["helpfulAdvice", "tip1", "tip2", "tip3", "week1Goal"]
+                required: [ "goalOfTheDay"]
             }
         }
     }
@@ -69,7 +54,7 @@ const body = req.body;
   const body = await req.json();
 
   // Destructure the variables from the body
-  const { renderedGoal, verbs, totalHours, currentProgress } = body;
+  const { renderedGoal, verbs, totalHours, currentProgress, week1Goal } = body;
   console.log("Rendered goal: ", renderedGoal);
     console.log("Verbs: ", verbs);
     console.log("Total hours: ", totalHours);
@@ -86,7 +71,7 @@ const body = req.body;
          const response = await openai.chat.completions.create({
              model: "gpt-4",
     messages: [
-        {role: 'system', content: 'You are a helpful assistant that gives  advice on reaching a   12 week goal.'},
+        {role: 'system', content: 'You are a helpful assistant that creates  a daily goal towards their   12 week goal.'},
         {role: 'user', content: 'Can you help me reach my goal?'},
         {role: 'assistant', content: 'Sure, what is your goal?'},
         {role: 'user', content: `${renderedGoal}`},
@@ -96,7 +81,9 @@ const body = req.body;
         {role: 'user', content: `${totalHours}`},
         {role: 'assistant', content: 'What is your current progress?'},
         {role: 'user', content: `${currentProgress}`},
-        {role: 'user', content: 'Can you give me some advice on how to proceed?'}
+        {role: 'assistant', content: 'What is your weekly goal?'},
+        {role: 'user', content: `${week1Goal}`},
+        {role:'user', content: "can you generate me a daily goal"}
     ],
              tools: tools,
              tool_choice:{"type": "function", "function": {"name": "generate_advice"}}
