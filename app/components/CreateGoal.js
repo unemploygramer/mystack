@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import LoadingSpinner from './LoadingSpinner';
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import Link from 'next/link';
 export default function CreateGoal() {
   const [goalText, setGoalText] = useState('');
   const [renderedGoal, setRenderedGoal] = useState('');
@@ -54,6 +55,7 @@ const getGoalOfTheDay = async () => {
   if (response.ok) {
     const data = await response.json();
     setGoalOfTheDay(data.goalOfTheDay);
+    setStep('displayGoal'); // Set the step to 'displayGoal'
   } else {
     // Handle error here
   }
@@ -129,15 +131,17 @@ const submitProgress = async (e) => {
               return (
                 <>
                   <div className="text-xl text-center mt-12">{renderedGoal}</div>
+                    <h2 className="text-2xl text-center ">What is your goal?</h2>
+                    <h2 className="text-xl text-center mt-4">Make sure it is specific, measurable, achievable, relevant, and time-bound</h2>
                   <form onSubmit={fetchData}>
-                    <textarea
-                      className=" flex flex-col w-[90vw] max-w-[400px] mt-8 h-24 p-2 bg-orange-300 mt-4 "
-                      value={goalText}
-                      onChange={(e) => setGoalText(e.target.value)}
-                    />
+       <textarea
+         className="focus:border-orange-700 border-orange-500 focus:outline-none border-2 rounded-xl border-orange-500 flex flex-col w-[90vw] max-w-[400px] mt-8 h-24 p-2 bg-orange-300 mt-4 shadow"
+         value={goalText}
+         onChange={(e) => setGoalText(e.target.value)}
+       />
                     <button
                       type="submit"
-                      className="bg-blue-500 text-white rounded p-2 px-4 mt-4"
+                      className="bg-orange-500 font-bold text-white rounded p-2 px-4 mt-4"
                     >
                       Submit
                     </button>
@@ -149,18 +153,18 @@ const submitProgress = async (e) => {
                    <div className="">
                    <div className="flex  justify-center">
 
-<h2 className="text-xl text-center mt-4 bg-orange-400 p-2 font-bold rounded-xl border-4 border-orange-500">
+<h2 className="text-xl text-center mt-4 bg-orange-300 p-2 font-bold rounded-xl border-2 border-orange-500">
                      {renderedGoal
                      }</h2>
                      </div>
                                           <div className=" w-screen flex justify-center  flex-col items-center  p-4">
 <div className="bg-gray-300 flex flex-col items-center p-4 rounded-xl w-[90vw] max-w-[500px] border-2 border-gray-400 shadow-lg">
                      <h2 className="text-xl text-center mt-4 font-bold">Add all the actions needed to make the goal.</h2>
-                       <ul className="bg-gray-800 w-[90vw] max-w-[300px] h-[270px] mt-4 overflow-auto rounded-xl ">
+                       <ul className="bg-gray-800 w-[90%]  h-[270px] mt-4 overflow-auto rounded-xl ">
                          {verbs.map((verb, index) => (
-                           <li key={index} className="bg-orange-400 p-2 m-2 rounded-md">
+                           <li key={index} className="bg-orange-300 p-2 m-2 rounded-md">
                              <button
-                               className="bg-red-600 text-gray-300  p-2 rounded mr-3"
+                               className="bg-red-500 text-white  p-2 rounded mr-3"
                                onClick={() => deleteVerb(index)}
                              >
                                <FaRegTrashAlt />
@@ -171,23 +175,23 @@ const submitProgress = async (e) => {
                            </li>
                          ))}
                        </ul>
-<div className=" flex justify-center items-center mt-4 p-4 bg-gray-500 w-screen-[90vw] p-2 rounded-xl">
+<div className=" border-2 border-orange-400 flex justify-center items-center mt-4 p-4 bg-orange-300 w-screen-[90vw] p-2 rounded-xl">
                        <form onSubmit={addVerb}>
-<div className="flex justify-center items-center">
+<div className="flex justify-center items-center ">
     <input
-        className="p-2 mb-2 bg-orange-200 rounded"
+        className="p-2 mb-2 bg-orange-200 rounded border-2 border-orange-400"
         type="text"
         value={newVerb}
         onChange={(e) => setNewVerb(e.target.value)}
     />
 </div>
                          <div className=" flex justify-center">
-                         <button className="bg-orange-400 p-1 font-bold rounded-md p-2" type="submit">Add Action</button>
+                         <button className="bg-orange-500 p-1 font-bold rounded-md p-2" type="submit">Add Action</button>
                             </div>
                        </form>
 </div>
 <button
-  className="bg-orange-600 mt-4 text-black  font-bold w-24 rounded flex justify-center items-center"
+  className="bg-orange-500 mt-4 text-black  font-bold w-24 rounded flex justify-center items-center"
   onClick={() => setStep('currentProgress')}
 >
   <FaLongArrowAltRight  className="text-4xl"/>
@@ -233,7 +237,7 @@ return (
   <>
     <form
     onSubmit={submitProgress}
-
+className="bg-orange-300 border-2 border-orange-500 flex flex-col p-4 mt-4"
 
 
     >
@@ -246,20 +250,23 @@ return (
                     min="0"
                     value={totalHours || ''}
                     onChange={(e) => setTotalHours(Number(e.target.value))}
-                    className="p-2 mb-2 bg-orange-200 rounded"
+                    className="p-2 mb-2 bg-orange-200 rounded mt-2"
                   />
 
-      <label htmlFor="currentProgress" className="text-xl text-center mt-4">
+      <label htmlFor="currentProgress" className="text-xl text-center mt-2">
         Current progress towards your goal:
       </label>
       <textarea
         id="currentProgress"
         value={currentProgress || ''}
         onChange={(e) => setCurrentProgress(e.target.value)}
-        className="p-2 mb-2 bg-orange-200 rounded"
+        className="p-2 mb-2 bg-orange-200 rounded mt-4"
       />
-      <button type="submit">Submit</button>
-    </form>
+<div className="flex justify-center items-center">
+  <button className="bg-orange-500 p-2 w-24 rounded-xl  font-bold flex justify-center items-center" type="submit">
+    <FaLongArrowAltRight className="text-4xl"/>
+  </button>
+</div>  </form>
 {goalAdvice && (
   <div className="bg-orange-200 p-5 rounded-md">
     <h2 className="text-gray-700 mb-2">Goal Advice</h2>
@@ -329,6 +336,22 @@ return (
           </form>
         </div>
       );
+          case 'displayGoal':
+            return (
+              <div className="text-xl text-center mt-12">
+<h2>{'Create Tomorrow\'s Goal'}</h2>
+<div className=" w-[90vw] ">
+                  <textarea
+                    className=" border-2 border-orange-500 rounded-xl text-xl text-center mt-12 w-full bg-orange-200 h-[200px] p-2 mt-4"
+                    value={goalOfTheDay}
+                    onChange={(e) => setGoalOfTheDay(e.target.value)}
+                  />
+</div>
+<div className="mt-4">
+<Link className="bg-orange-500 font-bold text-white p-4 rounded-xl  " href="/Login">Sign Up to to Track</Link>
+</div>
+              </div>
+            );
             // Add more cases for additional steps here
             default:
               return null;
