@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import LoadingSpinner from './LoadingSpinner';
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { FaWindowClose } from "react-icons/fa";
 import Link from 'next/link';
 export default function CreateGoal() {
   const [goalText, setGoalText] = useState('');
@@ -20,6 +21,7 @@ const [currentProgress, setCurrentProgress] = useState('');
 const [goalAdvice, setGoalAdvice] = useState(null); // New state for the advice
 const [suggestedGoal, setSuggestedGoal] = useState('');
 const [goalOfTheDay, setGoalOfTheDay] = useState("");
+const [signUpPopup, setSignUpPopup] = useState(true);
 //const [goalAdvice, setGoalAdvice] = useState({
 //                                               "helpfulAdvice": "Consistency is key. Try to work on your goal a little bit every day.",
 //                                               "tip1": "Break down your goal into smaller, manageable tasks.",
@@ -120,7 +122,23 @@ const submitProgress = async (e) => {
   return(
   <div className="flex justify-center flex-col items-center">
     <h1 className="text-3xl">12 Week Goal</h1>
-
+    {signUpPopup && (
+      <div className="mt-[350px] fixed w-screen h-screen bg-gray-500 opacity-70 transition duration-1000 ease-in-out">
+        {/* Rest of your code */}
+      </div>
+    )}
+{signUpPopup && (
+<div className=" mt-[350px] flex justify-center items-center w-screen h-screen fixed">
+<div className="animate-slideIn bg-orange-200 flex flex-col justify-between p-5 rounded-md  w-[90vw] relative shadow-lg">
+   <button onClick={()=> setSignUpPopup(false)} className="absolute top-0 right-0 m-2">
+      <FaWindowClose className="text-[40px] text-red-500" />
+    </button>
+    <h2 className="text-gray-700 m-6 text-3xl font-bold text-center">Sign Up to Track Your Progress</h2>
+    <p className="text-gray-600 m-b-4 text-lg text-center mb-4">Join us and start tracking your progress towards your goals.</p>
+    <Link className="bg-orange-500 text-white p-4 rounded-xl w-full font-bold text-lg" href="/SignUp">Sign Up</Link>
+  </div>
+</div>
+)}
     {isLoading ? (
       <LoadingSpinner />
     ) : (

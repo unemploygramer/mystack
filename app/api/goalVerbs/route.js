@@ -65,7 +65,7 @@ const body = req.body;
         // Retrieve a random word
 
          const response = await openai.chat.completions.create({
-             model: "gpt-4",
+             model: "gpt-4o-mini",
              messages: [            {role: 'system', content: 'You are a helpful assistant trying to find and help people make goals that are specific, measurable, achievable, and relevant .'},
              {role: 'user', content:`my goal is to ${goal}`}
 ],

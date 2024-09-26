@@ -83,7 +83,7 @@ export async function POST(req){
         // Retrieve a random word
 
          const response = await openai.chat.completions.create({
-             model: "gpt-4",
+             model: "gpt-4o-mini",
              messages: messages,
              tools: tools
 

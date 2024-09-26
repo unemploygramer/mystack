@@ -58,7 +58,7 @@ console.log(affirmation,"the affirmation in the submit word route")
         // Retrieve a random word
 
          const response = await openai.chat.completions.create({
-             model: "gpt-4",
+             model: "gpt-4o-mini",
              messages: [
                  {
                      "role": "system",
