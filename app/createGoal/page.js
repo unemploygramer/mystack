@@ -5,8 +5,11 @@ async function page() {
 
   return (
   <div className="mt-[90px]">
-  <CreateGoal />
+    <CreateGoal />
   </div>
   )
   }
 export default page
+
+
+

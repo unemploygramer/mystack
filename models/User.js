@@ -30,6 +30,9 @@ const userSchema = new mongoose.Schema({
 
 
     },
+      resetToken: {
+        type: String,
+      },
 });
 
 const User = mongoose.models?.User || mongoose.model("User", userSchema)
