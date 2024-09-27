@@ -16,6 +16,20 @@ const userSchema = new mongoose.Schema({
   emailToken: {
     type: String,
   },
+  emailConfirmed: {
+    type: Boolean,
+    default: false,
+  },
+  subscription: {
+    type: String, // or an object depending on your needs
+    default: "free",
+  },
+    trialStart: {
+      type: Date,
+        default: Date.now,
+
+
+    },
 });
 
 const User = mongoose.models?.User || mongoose.model("User", userSchema)

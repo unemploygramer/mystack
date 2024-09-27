@@ -22,11 +22,11 @@ export async function POST(req) {
 
     // Generate a token
     const token = crypto.randomBytes(20).toString('hex');
-    const confirmationLink = `http://localhost:3000/confirm-email?token=${token}`;
+    const confirmationLink = `http://localhost:3000/confirm-email/${token}`;
 
     // Create new user
-    const newUser = await User.create({ email, password: hashedPassword, emailToken: token });
-
+// Create new user
+const newUser = await User.create({ email, password: hashedPassword, emailToken: token, subscription: "free" });
     // Create a transporter object
     let transporter = nodemailer.createTransport({
       service: 'gmail', // replace with your email service
