@@ -85,14 +85,33 @@ import { signIn } from 'next-auth/react';
           password,
         }),
       });
+if (res.ok) {
+  const form = e.target;
+  form.reset();
+    const { userId } = await res.json();
 
-      if (res.ok) {
-        const form = e.target;
-        form.reset();
-        router.push("/");
-      } else {
-        console.log("User registration failed.");
-      }
+  const goalData = JSON.parse(localStorage.getItem('goalData'));
+  if (goalData) {
+    const response = await fetch('/api/saveGoal', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        ...goalData,
+        userId: userId // replace this with the actual user ID
+      })
+    });
+    if (response.ok) {
+      localStorage.removeItem('goalData'); // remove the goal data from local storage
+    } else {
+      // Handle error here
+    }
+  }
+  router.push("/");
+} else {
+  console.log("User registration failed.");
+}
     } catch (error) {
       console.log("Error during registration: ", error);
     }

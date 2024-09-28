@@ -119,6 +119,49 @@ const submitProgress = async (e) => {
   }
   setIsLoading(false); // Hide loading spinner
 };
+
+const saveGoal = async () => {
+const goalData = {
+    goalText: renderedGoal,
+    verbs: verbs,
+    totalHours: totalHours,
+    currentProgress: currentProgress,
+    goalAdvice: goalAdvice,
+    suggestedGoal: suggestedGoal,
+  };
+  localStorage.setItem('goalData', JSON.stringify(goalData));
+//  const response = await fetch('/api/saveGoal', {
+//    method: 'POST',
+//    headers: {
+//      'Content-Type': 'application/json'
+//    },
+//    body: JSON.stringify({
+//      goalText: renderedGoal,
+//      verbs: verbs,
+//      totalHours: totalHours,
+//      currentProgress: currentProgress,
+//      goalAdvice: goalAdvice,
+//      suggestedGoal: suggestedGoal,
+//      userId: '66f731d88629ecf163aff73f' // replace this with the actual user ID
+//    })
+//  });
+//
+//  if (response.ok) {
+//    // Handle success here
+//  } else {
+//    // Handle error here
+//  }
+}
+
+
+
+
+
+
+
+
+
+
   return(
   <div className="flex justify-center flex-col items-center">
     <h1 className="text-3xl">12 Week Goal</h1>
@@ -368,6 +411,7 @@ className="bg-orange-300 border-2 border-orange-500 flex flex-col p-4 mt-4"
 <div className="mt-4">
 <Link className="bg-orange-500 font-bold text-white p-4 rounded-xl  " href="/Login">Sign Up to to Track</Link>
 </div>
+<button onClick={saveGoal}>Save Goal</button>
               </div>
             );
             // Add more cases for additional steps here
