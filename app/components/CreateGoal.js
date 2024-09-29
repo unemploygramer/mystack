@@ -6,7 +6,10 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { FaWindowClose } from "react-icons/fa";
 import Link from 'next/link';
+import {useSession} from "next-auth/react"
+
 export default function CreateGoal() {
+  const { data: session } = useSession();
   const [goalText, setGoalText] = useState('');
   const [renderedGoal, setRenderedGoal] = useState('');
   const [verbs, setVerbs] = useState([]);
@@ -21,7 +24,7 @@ const [currentProgress, setCurrentProgress] = useState('');
 const [goalAdvice, setGoalAdvice] = useState(null); // New state for the advice
 const [suggestedGoal, setSuggestedGoal] = useState('');
 const [goalOfTheDay, setGoalOfTheDay] = useState("");
-const [signUpPopup, setSignUpPopup] = useState(true);
+const [signUpPopup, setSignUpPopup] = useState(false);
 //const [goalAdvice, setGoalAdvice] = useState({
 //                                               "helpfulAdvice": "Consistency is key. Try to work on your goal a little bit every day.",
 //                                               "tip1": "Break down your goal into smaller, manageable tasks.",
@@ -121,7 +124,7 @@ const submitProgress = async (e) => {
 };
 
 const saveGoal = async () => {
-const goalData = {
+  const goalData = {
     goalText: renderedGoal,
     verbs: verbs,
     totalHours: totalHours,
@@ -129,28 +132,29 @@ const goalData = {
     goalAdvice: goalAdvice,
     suggestedGoal: suggestedGoal,
   };
-  localStorage.setItem('goalData', JSON.stringify(goalData));
-//  const response = await fetch('/api/saveGoal', {
-//    method: 'POST',
-//    headers: {
-//      'Content-Type': 'application/json'
-//    },
-//    body: JSON.stringify({
-//      goalText: renderedGoal,
-//      verbs: verbs,
-//      totalHours: totalHours,
-//      currentProgress: currentProgress,
-//      goalAdvice: goalAdvice,
-//      suggestedGoal: suggestedGoal,
-//      userId: '66f731d88629ecf163aff73f' // replace this with the actual user ID
-//    })
-//  });
-//
-//  if (response.ok) {
-//    // Handle success here
-//  } else {
-//    // Handle error here
-//  }
+
+  if (session && session.user && session.user.email) {
+  console.log(session.user.email,"the owner in the saveGoal route$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+    const response = await fetch('/api/saveGoal', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        ...goalData,
+        owner: session.user.email
+      })
+    });
+
+    if (response.ok) {
+      // Handle success here
+    } else {
+      // Handle error here
+    }
+  } else {
+    localStorage.setItem('goalData', JSON.stringify(goalData));
+    setSignUpPopup(true);
+  }
 }
 
 
@@ -263,6 +267,7 @@ const goalData = {
               );
 case 'advice':
   return (
+  <div className="flex w-[90vw] max-w-[800px] mt-4">
     <div className="bg-orange-200 p-5 rounded-md">
       <h2 className="text-gray-700 mb-2">Goal Advice</h2>
       <p className="mb-2"><strong>Advice:</strong> {goalAdvice.helpfulAdvice}</p>
@@ -291,6 +296,7 @@ case 'advice':
 >
   {isLoading ? 'Loading...' : 'Proceed to Task Allocation'}
 </button>
+    </div>
     </div>
   );
 case 'currentProgress':
@@ -408,10 +414,8 @@ className="bg-orange-300 border-2 border-orange-500 flex flex-col p-4 mt-4"
                     onChange={(e) => setGoalOfTheDay(e.target.value)}
                   />
 </div>
-<div className="mt-4">
-<Link className="bg-orange-500 font-bold text-white p-4 rounded-xl  " href="/Login">Sign Up to to Track</Link>
-</div>
-<button onClick={saveGoal}>Save Goal</button>
+
+<button className="bg-orange-500 font-bold text-white p-4 rounded-xl  " onClick={saveGoal}>Save and Track Goal</button>
               </div>
             );
             // Add more cases for additional steps here

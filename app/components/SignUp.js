@@ -51,71 +51,68 @@ import { signIn } from 'next-auth/react';
   //   }
   // };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if ( !email || !password) {
-      setError("All fields are necessary.");
+  if ( !email || !password) {
+    setError("All fields are necessary.");
+    return;
+  }
+
+  try {
+    const resUserExists = await fetch("api/userExists", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    const { user } = await resUserExists.json();
+
+    if (user) {
+      setError("User already exists.");
       return;
     }
 
-    try {
-      const resUserExists = await fetch("api/userExists", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const { user } = await resUserExists.json();
-
-      if (user) {
-        setError("User already exists.");
-        return;
-      }
-
-      const res = await fetch("api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
-if (res.ok) {
-  const form = e.target;
-  form.reset();
-    const { userId } = await res.json();
-
-  const goalData = JSON.parse(localStorage.getItem('goalData'));
-  if (goalData) {
-    const response = await fetch('/api/saveGoal', {
-      method: 'POST',
+    const res = await fetch("api/register", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ...goalData,
-        userId: userId // replace this with the actual user ID
-      })
+        email,
+        password,
+      }),
     });
-    if (response.ok) {
-      localStorage.removeItem('goalData'); // remove the goal data from local storage
+
+    if (res.ok) {
+      const form = e.target;
+      form.reset();
+      const { userId } = await res.json();
+
+      // ... rest of your code
+
+      // After successful registration, sign in the user
+      const loginRes = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (loginRes?.error) {
+        setError('Invalid email or password');
+      } else {
+        if (loginRes?.url) router.replace(`/`);
+        setError('');
+      }
     } else {
-      // Handle error here
+      console.log("User registration failed.");
     }
+  } catch (error) {
+    console.log("Error during registration: ", error);
   }
-  router.push("/");
-} else {
-  console.log("User registration failed.");
-}
-    } catch (error) {
-      console.log("Error during registration: ", error);
-    }
-  };
+};
 
 
 

@@ -4,13 +4,13 @@ import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(req) {
   try {
-    const { goalText, verbs, totalHours, currentProgress, goalAdvice, suggestedGoal, userId } = await req.json();
-    console.log('Request body:', { goalText, verbs, totalHours, currentProgress, goalAdvice, suggestedGoal, userId }); // Log the request body
-
+const { goalText, verbs, totalHours, currentProgress, goalAdvice, suggestedGoal, owner } = await req.json();
+console.log(owner,"the owner in the saveGoal route%%%%%%%%%%%%%%%%%%%%%%%%%%")
+console.log('Request body:', { goalText, verbs, totalHours, currentProgress, goalAdvice, suggestedGoal, owner });
     await connect();
 
     // Create new goal
-    const newGoal = await Goal.create({ goalText, verbs, totalHours, currentProgress, goalAdvice, suggestedGoal, userId });
+    const newGoal = await Goal.create({ goalText, verbs, totalHours, currentProgress, goalAdvice, suggestedGoal, owner });
     console.log('New goal:', newGoal); // Log the new goal
 
     return NextResponse.json({ message: "Goal saved." }, { status: 201 });

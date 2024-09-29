@@ -4,7 +4,6 @@ import Link from 'next/link'
 //import Hamburger from "./Hamburger";
 import {useSession} from "next-auth/react"
 import { signOut } from "next-auth/react";
-import { getServerSession } from 'next-auth/next';
 import Credits from "../components/Credits"
 import { IoMenu } from "react-icons/io5";
 import { v4 as uuidv4 } from 'uuid';
@@ -15,7 +14,7 @@ function Nav() {
   const { data: session } = useSession();
 const [userId, setUserId] = useState(null);
   const [guestCredits, setGuestCredits] = useState(0);
-
+console.log(session,"what does the session say");
   useEffect(() => {
     let userId = localStorage.getItem("userId");
         let credits = localStorage.getItem("guestCredits");
@@ -46,7 +45,13 @@ const [userId, setUserId] = useState(null);
   return (
     <div className=" z-50 bg-gray-600  h-20 flex items-center justify-end  pr-4 pl-2   fixed top-0 w-full">
        <div>
-
+      {session && session.user ? (
+        <label className="fixed top-7 left-3">{session.user.email}</label>
+      ) : (
+        <Link className="fixed top-7 left-3"  href="/login">
+     Login
+        </Link>
+      )}
 
            <div>
         <label className="h-0">
@@ -66,6 +71,8 @@ const [userId, setUserId] = useState(null);
            <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/List">Entries</Link>
            <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/">Make Entry</Link>
            <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/login">Login</Link>
+                                 <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/createGoal">Create Goal</Link>
+
                       <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/SignUp">Sign Up</Link>
 
 

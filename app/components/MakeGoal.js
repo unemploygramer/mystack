@@ -10,7 +10,6 @@ const MakeGoal= () => {
 
   ]);
   const [inputValue, setInputValue] = useState(''); // Add this line
-  const [inputValue, setInputValue] = useState(''); // Add this line
   const divRef = useRef(null);
 
   useEffect(() => {
