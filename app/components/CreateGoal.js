@@ -134,7 +134,6 @@ const saveGoal = async () => {
   };
 
   if (session && session.user && session.user.email) {
-  console.log(session.user.email,"the owner in the saveGoal route$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     const response = await fetch('/api/saveGoal', {
       method: 'POST',
       headers: {
@@ -142,7 +141,31 @@ const saveGoal = async () => {
       },
       body: JSON.stringify({
         ...goalData,
-        owner: session.user.email
+        owner: session.user.email,
+        subgoals: [
+          {
+            weekNumber: 1,
+            dailyTasks: [goalOfTheDay],
+            advice: goalAdvice.helpfulAdvice,
+            feedback: '',
+            progress: currentProgress,
+            timeSpent: 0,
+            completionStatus: false,
+            userNotes: '',
+            goalOutcome: '',
+          },
+          {
+            weekNumber: 1,
+            dailyTasks: [suggestedGoal],
+            advice: goalAdvice.helpfulAdvice,
+            feedback: '',
+            progress: currentProgress,
+            timeSpent: 0,
+            completionStatus: false,
+            userNotes: '',
+            goalOutcome: '',
+          },
+        ],
       })
     });
 
