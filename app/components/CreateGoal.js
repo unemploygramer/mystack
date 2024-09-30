@@ -132,6 +132,7 @@ const saveGoal = async () => {
     goalAdvice: goalAdvice,
     suggestedGoal: suggestedGoal,
   };
+  console.log(goalData,"goal data!!!!!! in the createGoal component"    );
 
   if (session && session.user && session.user.email) {
     const response = await fetch('/api/saveGoal', {
@@ -144,8 +145,8 @@ const saveGoal = async () => {
         owner: session.user.email,
         subgoals: [
           {
+            goalText: goalOfTheDay, // Set the goalText to goalOfTheDay
             weekNumber: 1,
-            dailyTasks: [goalOfTheDay],
             advice: goalAdvice.helpfulAdvice,
             feedback: '',
             progress: currentProgress,
@@ -153,10 +154,11 @@ const saveGoal = async () => {
             completionStatus: false,
             userNotes: '',
             goalOutcome: '',
+            goalType: 'daily',
           },
           {
+            goalText: suggestedGoal, // Set the goalText to suggestedGoal
             weekNumber: 1,
-            dailyTasks: [suggestedGoal],
             advice: goalAdvice.helpfulAdvice,
             feedback: '',
             progress: currentProgress,
@@ -164,6 +166,7 @@ const saveGoal = async () => {
             completionStatus: false,
             userNotes: '',
             goalOutcome: '',
+            goalType: 'weekly',
           },
         ],
       })

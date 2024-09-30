@@ -11,10 +11,22 @@ export async function POST(req) {
     await connect();
 
     // Create new subgoals
-    const newSubgoals = await Promise.all(subgoals.map(subgoal => Subgoal.create(subgoal)));
+    const newSubgoals = await Promise.all(subgoals.map(subgoal => Subgoal.create({
+      ...subgoal,
+      dueDate: subgoal.goalType === 'weekly' ? Date.now() + 7 * 24 * 60 * 60 * 1000 : Date.now() + 24 * 60 * 60 * 1000,
+    })));
 
     // Create new goal with subgoals
-    const newGoal = await Goal.create({ goalText, verbs, totalHours, currentProgress, goalAdvice, suggestedGoal, owner, subgoals: newSubgoals.map(subgoal => subgoal._id) });
+    const newGoal = await Goal.create({
+      goalText,
+      verbs, // Make sure to include this
+      totalHours,
+      currentProgress,
+      goalAdvice,
+      suggestedGoal,
+      owner,
+      subgoals: newSubgoals.map(subgoal => subgoal._id)
+    });
     console.log('New goal:', newGoal); // Log the new goal
 
     return NextResponse.json({ message: "Goal saved." }, { status: 201 });

@@ -6,10 +6,7 @@ const subgoalSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  dailyTasks: [{
-    type: String,
-    required: true,
-  }],
+
   advice: {
     type: String,
     required: true,
@@ -22,6 +19,19 @@ const subgoalSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+    goalType: {
+      type: String,
+      enum: ['daily', 'weekly'],
+      required: true,
+    },
+      goalText: {
+        type: String,
+        required: true,
+      },
+    dueDate: {
+      type: Date,
+      required: true,
+    },
   timeSpent: {
     type: Number,
     required: true,

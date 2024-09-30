@@ -1,10 +1,17 @@
 import mongoose from "mongoose";
+
 // Goal Model
 const goalSchema = new mongoose.Schema({
   goalText: {
     type: String,
     required: true,
   },
+  verbs: [ // Add this field
+    {
+      type: String,
+      required: true,
+    },
+  ],
   totalHours: {
     type: Number,
     required: true,
@@ -13,6 +20,10 @@ const goalSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+    dueDate: {
+      type: Date,
+      default: () => Date.now() + 12 * 7 * 24 * 60 * 60 * 1000, // 12 weeks from now
+    },
   goalAdvice: {
     type: Object,
     required: true,
@@ -31,45 +42,6 @@ const goalSchema = new mongoose.Schema({
   }]
 });
 
-// Subgoal Model
-const subgoalSchema = new mongoose.Schema({
-  weekNumber: {
-    type: Number,
-    required: true,
-  },
-  dailyTasks: [{
-    type: String,
-    required: true,
-  }],
-  advice: {
-    type: String,
-    required: true,
-  },
-  feedback: {
-    type: String,
-    required: true,
-  },
-  progress: {
-    type: String,
-    required: true,
-  },
-  timeSpent: {
-    type: Number,
-    required: true,
-  },
-  completionStatus: {
-    type: Boolean,
-    required: true,
-  },
-  userNotes: {
-    type: String,
-    required: false,
-  },
-  goal: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Goal'
-  }
-});
 const Goal = mongoose.models?.Goal || mongoose.model("Goal", goalSchema)
 
 export default Goal

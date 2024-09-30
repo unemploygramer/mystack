@@ -34,14 +34,14 @@ console.log(data,"the data")
 
   return (
 <div className="flex justify-center overflow-x-hidden mt-[130px]  ">
-<div className="bg-orange-200 p-4 w-[90vw] rounded-lg shadow-lg">
+<div className="bg-orange-200 p-4 w-[90vw] max-w-[800px] rounded-lg shadow-lg">
   <h2 className="text-2xl font-bold mb-4 border-b-2 border-gray-200 pb-2">Goal: {goalText}</h2>
 
 <p className="text-lg mb-2 border-b-2 border-gray-200 pb-2"><span className="font-bold">Verbs:</span> {verbs.join(', ')}</p>
-<p className="text-lg mb-2 border-b-2 border-gray-200 pb-2"><span className="font-bold">Total Hours:</span> {totalHours}</p>  <p className="text-lg mb-2 border-b-2 border-gray-200 pb-2">Current Progress: {currentProgress}</p>
+<p className="text-lg mb-2 border-b-2 border-gray-200 pb-2"><span className="font-bold">Total Hours:</span> {totalHours}</p>
+ <p className="text-lg mb-2 border-b-2 border-gray-200 pb-2"><span className="font-bold">Current Progress:</span> {currentProgress}</p>
 
-  <p className="text-lg mb-2 border-b-2 border-gray-200 pb-2">Week 1 Goal: {goalAdvice.week1Goal}</p>
-  <p className="text-lg mb-2 border-b-2 border-gray-200 pb-2">Suggested Goal: {suggestedGoal}</p>
+  <p className="text-lg mb-2 border-b-2 border-gray-200 pb-2"><span className="font-bold">Week 1 Goal: </span> {goalAdvice.week1Goal}</p>
 </div>
 
     </div>
