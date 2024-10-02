@@ -18,13 +18,16 @@ const tools = [
             parameters: {
                 type: "object",
                 properties: {
-
                     goalOfTheDay: {
                         type: "string",
                         description: "suggested goal of the day that is specific,measurable, achievable, and relevant for the first week of the goal phrased in the first person future tense."
+                    },
+                    dailyGoalAdvice: { // New property for daily goal advice
+                        type: "string",
+                        description: "Advice on how to reach the daily goal."
                     }
                 },
-                required: [ "goalOfTheDay"]
+                required: [ "goalOfTheDay", "dailyGoalAdvice" ] // Add "dailyGoalAdvice" to the required array
             }
         }
     }

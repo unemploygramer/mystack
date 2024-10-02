@@ -25,6 +25,7 @@ const [goalAdvice, setGoalAdvice] = useState(null); // New state for the advice
 const [suggestedGoal, setSuggestedGoal] = useState('');
 const [goalOfTheDay, setGoalOfTheDay] = useState("");
 const [signUpPopup, setSignUpPopup] = useState(false);
+const [dailyGoalAdvice, setDailyGoalAdvice] = useState(""); // New state for the daily goal advice
 //const [goalAdvice, setGoalAdvice] = useState({
 //                                               "helpfulAdvice": "Consistency is key. Try to work on your goal a little bit every day.",
 //                                               "tip1": "Break down your goal into smaller, manageable tasks.",
@@ -60,7 +61,8 @@ const getGoalOfTheDay = async () => {
   if (response.ok) {
     const data = await response.json();
     setGoalOfTheDay(data.goalOfTheDay);
-    setStep('displayGoal'); // Set the step to 'displayGoal'
+    setDailyGoalAdvice(data.dailyGoalAdvice); // Save the daily goal advice
+    setStep('displayGoal');
   } else {
     // Handle error here
   }
@@ -147,7 +149,7 @@ const saveGoal = async () => {
           {
             goalText: goalOfTheDay, // Set the goalText to goalOfTheDay
             weekNumber: 1,
-            advice: goalAdvice.helpfulAdvice,
+            advice: dailyGoalAdvice, // Add the daily goal advice here
             feedback: '',
             progress: currentProgress,
             timeSpent: 0,
@@ -159,7 +161,7 @@ const saveGoal = async () => {
           {
             goalText: suggestedGoal, // Set the goalText to suggestedGoal
             weekNumber: 1,
-            advice: goalAdvice.helpfulAdvice,
+            advice: "",
             feedback: '',
             progress: currentProgress,
             timeSpent: 0,
@@ -431,18 +433,24 @@ className="bg-orange-300 border-2 border-orange-500 flex flex-col p-4 mt-4"
       );
           case 'displayGoal':
             return (
-              <div className="text-xl text-center mt-12">
-<h2>{'Create Tomorrow\'s Goal'}</h2>
-<div className=" w-[90vw] ">
-                  <textarea
-                    className=" border-2 border-orange-500 rounded-xl text-xl text-center mt-12 w-full bg-orange-200 h-[200px] p-2 mt-4"
-                    value={goalOfTheDay}
-                    onChange={(e) => setGoalOfTheDay(e.target.value)}
-                  />
+<div className="text-xl text-center mt-4">
+  <h2>{'Create Tomorrow\'s Goal'}</h2>
+  <div className=" flex items-center justify-center">
+  <div className=" w-[90vw] ">
+    <textarea
+      className=" max-w-[800px] border-2 border-orange-500 rounded-xl text-xl text-center mt-12 w-full bg-orange-200 h-[200px] p-2 mt-4"
+      value={goalOfTheDay}
+      onChange={(e) => setGoalOfTheDay(e.target.value)}
+    />
+  </div>
+  </div>
+  <div className="flex w-screen justify-center">
+  <div className="bg-orange-200 p-4 rounded-xl m-4  w-[95vw] max-w-[700px]">
+  <p>{dailyGoalAdvice}</p>
+  </div>
+   </div>{/* Render the daily goal advice */}
+  <button className="bg-orange-500 font-bold text-white p-4 rounded-xl" onClick={saveGoal}>Save and Track Goal</button>
 </div>
-
-<button className="bg-orange-500 font-bold text-white p-4 rounded-xl  " onClick={saveGoal}>Save and Track Goal</button>
-              </div>
             );
             // Add more cases for additional steps here
             default:

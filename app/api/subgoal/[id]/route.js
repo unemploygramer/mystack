@@ -3,17 +3,17 @@ import {connect} from "../../../../utils/config/dbConfig"
 import JournalEntry from "../../../../models/JournalEntry";
 import crypto from 'crypto';
 import { redirect } from 'next/navigation'
-import Goal from "../../../../models/Goal";
+import Subgoal from '../models/Subgoal'; // Assuming you have a Subgoal model
 
 
 
 export async function GET(req,context) {
-  const {user} = context.params;
+  const {id} = context.params;
   console.log(user, "the user")
   try{
     await connect();
-const userGoal = await Goal.findOne({owner: user})
-    console.log("User goal!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:", userGoal);
+const subGoal = await Subgoal.findOne({_id: id})
+    console.log("sub goal", userGoal);
     return NextResponse.json({userGoal: userGoal})
   } catch (error) {
     console.log(error)
