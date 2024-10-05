@@ -20,6 +20,10 @@ const goalSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+    createdDate: {
+      type: Date,
+      default: Date.now,
+    },
     dueDate: {
       type: Date,
       default: () => Date.now() + 12 * 7 * 24 * 60 * 60 * 1000, // 12 weeks from now

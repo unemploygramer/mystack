@@ -9,7 +9,7 @@ const subgoalSchema = new mongoose.Schema({
 
   advice: {
     type: String,
-    required: true,
+    required: false,
   },
   feedback: {
     type: String,
@@ -19,6 +19,10 @@ const subgoalSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+    owner: {
+      type: String,
+      required: true,
+    },
     goalType: {
       type: String,
       enum: ['daily', 'weekly'],

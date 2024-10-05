@@ -157,6 +157,7 @@ const saveGoal = async () => {
             userNotes: '',
             goalOutcome: '',
             goalType: 'daily',
+                    owner: session.user.email,
           },
           {
             goalText: suggestedGoal, // Set the goalText to suggestedGoal
@@ -169,6 +170,7 @@ const saveGoal = async () => {
             userNotes: '',
             goalOutcome: '',
             goalType: 'weekly',
+                    owner: session.user.email,
           },
         ],
       })

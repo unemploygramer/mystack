@@ -25,6 +25,7 @@ export async function POST(req) {
       goalAdvice,
       suggestedGoal,
       owner,
+            createdDate: Date.now(),
       subgoals: newSubgoals.map(subgoal => subgoal._id)
     });
     console.log('New goal:', newGoal); // Log the new goal
