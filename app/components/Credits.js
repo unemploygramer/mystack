@@ -1,7 +1,7 @@
 import React from 'react'
 import {useSession} from "next-auth/react"
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../../utils/authOptions';
+import  authOptions  from '../../utils/authOptions';
 import checkAuth from '../../utils/checkAuth';
 
 async function fetchData() {

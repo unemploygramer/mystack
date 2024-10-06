@@ -1,3 +1,5 @@
+import FeedbackInput from "../../components/FeedbackInput"
+
 async function getGoal(id) {
   try {
     const response = await fetch(`${process.env.NEXTAUTH_URL}/api/getGoalByID/${id}`, {
@@ -18,8 +20,14 @@ async function page ({params}) {
   const goal = await getGoal(id) // await the result of getGoal
   console.log(goal, "the goal%%%%%%%%%%")
   return (
-    <div className=" mt-[150px] w-screen h-screen">
-        <div>{goal.goalText}</div>
+    <div className=" mt-[100px] w-screen ">
+    <h1 className="text-3xl text-center m-6">Goal Feedback</h1>
+        <div className="flex justify-center   ">
+        <h3 className="bg-orange-300 p-4 rounded-xl  max-w-[500px] w-[90vw]">
+        {goal.goalText}
+        </h3>
+        </div>
+        <FeedbackInput/>
     </div>
   )
 }

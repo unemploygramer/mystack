@@ -1,7 +1,7 @@
 import Image from "next/image";
 import JournalInput from "./components/JournalInput";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../utils/authOptions";
+import authOptions from "../utils/authOptions";
 import Credits from "./components/Credits";
 import { redirect } from 'next/navigation'
 import Title from "./components/Title"
