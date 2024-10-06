@@ -1,20 +1,36 @@
 "use client"
 import React, { useState } from 'react';
 
-function FeedbackInput() {
+function FeedbackInput({subgoalId}) {
   const [difficulty, setDifficulty] = useState(null);
   const [additionalComments, setAdditionalComments] = useState('');
   const [result, setResult] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const feedback = {
       difficulty,
       result,
       additionalComments,
     };
-    console.log(feedback);
+    console.log('Feedback data:', feedback);
+    try {
+      const response = await fetch(`/api/updateSubgoalFeedback/${subgoalId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(feedback),
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      console.log('Feedback submitted successfully');
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+    }
   };
+
 
   return (
     <div className=" flex justify-center">

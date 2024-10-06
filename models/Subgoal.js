@@ -19,6 +19,15 @@ const subgoalSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
+  feedbackResult: {
+    type: String,
+    required: false,
+  },
+  feedbackAdditionalComments: {
+    type: String,
+    required: false,
+  },
     owner: {
       type: String,
       required: true,

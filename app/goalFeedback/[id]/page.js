@@ -27,8 +27,7 @@ async function page ({params}) {
         {goal.goalText}
         </h3>
         </div>
-        <FeedbackInput/>
-    </div>
+<FeedbackInput subgoalId={id}/>    </div>
   )
 }
 
