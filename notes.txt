@@ -1,0 +1,2 @@
+create a route to get all the subgoals of the week as well as the main goal.
+then feed that into the aifeedBack api route
