@@ -55,11 +55,10 @@ const body = req.body;
   const body = await req.json();
 
   // Destructure the variables from the body
-  const { renderedGoal, verbs, totalHours, currentProgress, week1Goal } = body;
-  console.log("Rendered goal: ", renderedGoal);
-    console.log("Verbs: ", verbs);
-    console.log("Total hours: ", totalHours);
-    console.log("Current progress: ", currentProgress);
+  const {mainGoal,subGoals} = body;
+    console.log(mainGoal,"the main goal in the submit word route")
+    console.log(subGoals,"the subgoals in the submit word route")
+
 
 
 //        console.log(chat,"the chat in the findGoal route")
@@ -72,18 +71,18 @@ const body = req.body;
          const response = await openai.chat.completions.create({
              model: "gpt-4o-mini",
     messages: [
-        {role: 'system', content: 'You are a helpful assistant that creates  a daily goal towards their   12 week goal.'},
+        {role: 'system', content: 'You are a helpful assistant that helps me create my next goal toward my   12 week goal.'},
         {role: 'user', content: 'Can you help me reach my goal?'},
-        {role: 'assistant', content: 'Sure, what is your goal?'},
-        {role: 'user', content: `${renderedGoal}`},
-        {role: 'assistant', content: 'Okay, what actions are needed to achieve this goal?'},
-        {role: 'user', content: `${verbs}`},
-        {role: 'assistant', content: 'How many hours per week can you dedicate to this goal?'},
-        {role: 'user', content: `${totalHours}`},
-        {role: 'assistant', content: 'What is your current progress?'},
-        {role: 'user', content: `${currentProgress}`},
-        {role: 'assistant', content: 'What is your weekly goal?'},
-        {role: 'user', content: `${week1Goal}`},
+//        {role: 'assistant', content: 'Sure, what is your goal?'},
+//        {role: 'user', content: `${renderedGoal}`},
+//        {role: 'assistant', content: 'Okay, what actions are needed to achieve this goal?'},
+//        {role: 'user', content: `${verbs}`},
+//        {role: 'assistant', content: 'How many hours per week can you dedicate to this goal?'},
+//        {role: 'user', content: `${totalHours}`},
+//        {role: 'assistant', content: 'What is your current progress?'},
+//        {role: 'user', content: `${currentProgress}`},
+//        {role: 'assistant', content: 'What is your weekly goal?'},
+//        {role: 'user', content: `${week1Goal}`},
         {role:'user', content: "can you generate me a daily goal"}
     ],
              tools: tools,

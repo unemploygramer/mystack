@@ -1,10 +1,13 @@
 "use client"
 import React, { useState } from 'react';
+import { useSession, signIn, signOut } from "next-auth/react"
 
 function FeedbackInput({subgoalId}) {
   const [difficulty, setDifficulty] = useState(null);
   const [additionalComments, setAdditionalComments] = useState('');
   const [result, setResult] = useState('');
+      const { data: session } = useSession();
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -31,7 +34,33 @@ function FeedbackInput({subgoalId}) {
     }
   };
 
-
+const fetchAllSubgoals = async (user) => {
+  try {
+    const response = await fetch(`/api/getAllSubgoals/${user}`, {
+      method: 'GET',
+    });
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data,"!!!!!!! the subgoals"); // This will log all subgoals
+      const getMainGoal = await fetch(`/api/getGoal/${session.user.email}`, {
+        method: 'GET',
+      });
+      if (getMainGoal.ok) {
+        const mainGoal = await getMainGoal.json();
+        console.log(mainGoal,"the main goal")
+        const AiFeedback = await fetch(`/api/AIGoalFeedback`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({mainGoal: mainGoal, subGoals: data.subGoals}),
+        });
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
   return (
     <div className=" flex justify-center">
       <form onSubmit={handleSubmit} className="max-w-[800px] bg-orange-200 rounded-xl  mt-12   w-[90%] p-4 flex flex-col items-center justify-center">
@@ -64,6 +93,9 @@ function FeedbackInput({subgoalId}) {
   Submit
 </button>
  </form>
+ <div>
+ <button onClick={()=> fetchAllSubgoals(session.user.email)}>
+ Click the Button for Feedback</button></div>
     </div>
   );
 }
