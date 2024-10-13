@@ -7,8 +7,11 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { FaWindowClose } from "react-icons/fa";
 import Link from 'next/link';
 import {useSession} from "next-auth/react"
+import { useRouter } from 'next/navigation';
 
 export default function CreateGoal() {
+  const router = useRouter(); // Get the router object
+
   const { data: session } = useSession();
   const [goalText, setGoalText] = useState('');
   const [renderedGoal, setRenderedGoal] = useState('');
@@ -126,6 +129,8 @@ const submitProgress = async (e) => {
 };
 
 const saveGoal = async () => {
+  setIsLoading(true); // Set loading to true at the start of the function
+
   const goalData = {
     goalText: renderedGoal,
     verbs: verbs,
@@ -176,9 +181,10 @@ const saveGoal = async () => {
       })
     });
 
-    if (response.ok) {
-      // Handle success here
-    } else {
+  if (response.ok) {
+    // Handle success here
+    router.push('/calendar/1'); // Redirect to calendar/1
+  } else {
       // Handle error here
     }
   } else {
@@ -434,26 +440,30 @@ className="bg-orange-300 border-2 border-orange-500 flex flex-col p-4 mt-4"
         </div>
       );
           case 'displayGoal':
-            return (
-<div className="text-xl text-center mt-4">
-  <h2>{'Create Tomorrow\'s Goal'}</h2>
-  <div className=" flex items-center justify-center">
-  <div className=" w-[90vw] ">
-    <textarea
-      className=" max-w-[800px] border-2 border-orange-500 rounded-xl text-xl text-center mt-12 w-full bg-orange-200 h-[200px] p-2 mt-4"
-      value={goalOfTheDay}
-      onChange={(e) => setGoalOfTheDay(e.target.value)}
-    />
-  </div>
-  </div>
-  <div className="flex w-screen justify-center">
-  <div className="bg-orange-200 p-4 rounded-xl m-4  w-[95vw] max-w-[700px]">
-  <p>{dailyGoalAdvice}</p>
-  </div>
-   </div>{/* Render the daily goal advice */}
-  <button className="bg-orange-500 font-bold text-white p-4 rounded-xl" onClick={saveGoal}>Save and Track Goal</button>
-</div>
-            );
+  return (
+    isLoading ? (
+      <LoadingSpinner />
+    ) : (
+      <div className="text-xl text-center mt-4">
+        <h2>{'Create Tomorrow\'s Goal'}</h2>
+        <div className=" flex items-center justify-center">
+        <div className=" w-[90vw] ">
+          <textarea
+            className=" max-w-[800px] border-2 border-orange-500 rounded-xl text-xl text-center mt-12 w-full bg-orange-200 h-[200px] p-2 mt-4"
+            value={goalOfTheDay}
+            onChange={(e) => setGoalOfTheDay(e.target.value)}
+          />
+        </div>
+        </div>
+        <div className="flex w-screen justify-center">
+        <div className="bg-orange-200 p-4 rounded-xl m-4  w-[95vw] max-w-[700px]">
+        <p>{dailyGoalAdvice}</p>
+        </div>
+        </div>{/* Render the daily goal advice */}
+        <button className="bg-orange-500 font-bold text-white p-4 rounded-xl" onClick={saveGoal}>Save and Track Goal</button>
+      </div>
+    )
+  );
             // Add more cases for additional steps here
             default:
               return null;
