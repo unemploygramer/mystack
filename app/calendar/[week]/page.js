@@ -22,6 +22,7 @@ async function fetchSubgoals(user, week) {
   try {
     const response = await fetch(`${process.env.NEXTAUTH_URL}/api/subgoalTime/${user}/${week}`, {
       method: 'GET',
+      cache: 'no-store',
     });
     if (response.ok) {
       const data = await response.json();
@@ -38,10 +39,8 @@ async function page({params}) {
 
   const session = await getServerSession(authOptions);
   const start = await fetchStart(session.user.email)
-  console.log(start, "the start!!!!!!")
   const subgoals = await fetchSubgoals(session.user.email, week)
-  console.log(subgoals, "the subgoals!!!!!!")
-
+console.log(subgoals, "the subgoals")
   // Calculate the start date of the week
   const startDate = new Date(start);
   startDate.setDate(startDate.getDate() + (week - 1) * 7);
@@ -52,12 +51,12 @@ async function page({params}) {
     date.setDate(date.getDate() + i);
     return { date: date, goalText: '' };
   });
-// Add goalText and id to the corresponding date
 subgoals.forEach(subgoal => {
   const dueDate = new Date(subgoal.dueDate);
   const index = dates.findIndex(dateObj => dateObj.date.toDateString() === dueDate.toDateString());
   if (index !== -1) {
     dates[index].goalText = subgoal.goalText;
+    dates[index].goalOutcome = subgoal.feedbackResult; // Add the goalOutcome of the subgoal
     dates[index].id = subgoal._id; // Add the id of the subgoal
   }
 });
@@ -65,12 +64,19 @@ subgoals.forEach(subgoal => {
 return (
   <div className="mt-[90px] w-screen h-screen ">
     {dates.map((dateObj, index) => (
-      <div key={index} className="border-2 border-gray-300 m-2 p-2 w-1/2 text-center">
+      <div
+        key={index}
+        className={`border-2 border-gray-300 m-2 p-2 w-1/2 text-center ${
+          dateObj.goalOutcome === '' ? 'bg-red-500' :
+          dateObj.goalOutcome === 'achieved' ? 'bg-green-500' :
+          dateObj.goalOutcome === 'partially_achieved' ? 'bg-yellow-500' :
+          dateObj.goalOutcome === 'not_achieved' ? 'bg-red-500' :
+          ''}`}
+      >
         {dateObj.date.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
         {dateObj.goalText && (
           <Link href={`/goalFeedback/${dateObj.id}`}>
             {dateObj.goalText}
-            
           </Link>
         )}
       </div>

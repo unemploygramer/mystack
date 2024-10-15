@@ -1,2 +1,5 @@
-create a route to get all the subgoals of the week as well as the main goal.
-then feed that into the aifeedBack api route
+color code the uncompleted vs completed tasks in the calander view
+
+
+
+ feed that into the aifeedBack api route
