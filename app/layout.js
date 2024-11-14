@@ -4,7 +4,6 @@ import SessionProvider from "../utils/SessionProvider"
 import { getServerSession } from "next-auth";
 import Nav from "./components/Nav"
 const inter = Inter({ subsets: ["latin"] });
-import Credits from "./components/Credits"
 export const metadata = {
   title: "Affirmly",
   description: "Creating Positive Affirmations",
@@ -20,9 +19,10 @@ const session = await getServerSession();
          <SessionProvider session={session}>
 
         <body className={`${inter.className} z-auto`}>
-      <Credits/>
       <Nav/>
-      {children}</body>
+      {children}
+
+      </body>
          </SessionProvider>
     </html>
   );

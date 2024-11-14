@@ -7,6 +7,7 @@ function FeedbackInput({subgoalId}) {
   const [additionalComments, setAdditionalComments] = useState('');
   const [result, setResult] = useState('');
       const { data: session } = useSession();
+  const [aiFeedback, setAiFeedback] = useState(null); // New state for AI feedback
 
 
   const handleSubmit = async (event) => {
@@ -55,6 +56,10 @@ const fetchAllSubgoals = async (user) => {
           },
           body: JSON.stringify({mainGoal: mainGoal, subGoals: data.subGoals}),
         });
+               if (AiFeedback.ok) {
+                    const aiData = await AiFeedback.json();
+                    setAiFeedback(aiData); // Store AI feedback in state
+                  }
       }
     }
   } catch (error) {
@@ -63,18 +68,18 @@ const fetchAllSubgoals = async (user) => {
 }
   return (
     <div className=" flex justify-center">
-      <form onSubmit={handleSubmit} className="max-w-[800px] bg-orange-200 rounded-xl  mt-12   w-[90%] p-4 flex flex-col items-center justify-center">
-        <div className="flex flex-col items-center mb-4">
-          <label>Result:</label>
-<select value={result} onChange={e => setResult(e.target.value)} className="w-[90%] h-10 bg-orange-300 rounded">
+      <form onSubmit={handleSubmit} className="max-w-[800px]  rounded-xl  mt-4   w-[90%] p-4 flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center mb-4  ">
+          <label className="p-2 text-2xl ">Result:</label>
+<select  value={result} onChange={e => setResult(e.target.value)} className="w-full  h-10 bg-orange-300 rounded">
   <option value="">--Please choose an option--</option>
   <option value="achieved">Achieved</option>
   <option value="partially_achieved">Partially Achieved</option>
   <option value="not_achieved">Not Achieved</option>
 </select>
         </div>
-        <div className="flex flex-col items-center mb-4">
-          <label>Difficulty:</label>
+        <div className="flex flex-col items-center mb-2">
+          <label className="text-xl p-2 ">Difficulty:</label>
           <input type="range" min="1" max="5" value={difficulty || ''} onChange={e => setDifficulty(e.target.value)} list="tickmarks" />
           <datalist id="tickmarks">
             <option value="1" label="1"></option>
@@ -86,16 +91,22 @@ const fetchAllSubgoals = async (user) => {
           {difficulty && <div> {difficulty}</div>}
         </div>
         <div className="flex flex-col items-center mb-4 w-[100%]">
-          <label>Write some insight on how it went</label>
+          <label className="text-xl p-2 ">Explain how it went</label>
           <textarea className="w-[90%] h-32 bg-orange-300  " value={additionalComments} onChange={e => setAdditionalComments(e.target.value)} />
         </div>
-<button type="submit" className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
+<button onClick={()=> fetchAllSubgoals(session.user.email)}  type="submit" className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
   Submit
 </button>
  </form>
- <div>
- <button onClick={()=> fetchAllSubgoals(session.user.email)}>
- Click the Button for Feedback</button></div>
+      {aiFeedback && (
+        <div className="mt-4 p-4 bg-gray-200 rounded">
+          <h2 className="text-xl font-bold">AI Feedback</h2>
+          <p><strong>Goal Analysis:</strong> {aiFeedback.goalAnalysis}</p>
+          <p><strong>What to Keep in Mind:</strong> {aiFeedback.whatToKeepInMind}</p>
+          <p><strong>Next Goal of the Day:</strong> {aiFeedback.nextGoalOfTheDay}</p>
+          <p><strong>Daily Goal Advice:</strong> {aiFeedback.dailyGoalAdvice}</p>
+        </div>
+      )}
     </div>
   );
 }

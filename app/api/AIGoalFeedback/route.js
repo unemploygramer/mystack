@@ -14,7 +14,7 @@ const tools = [
         type: "function",
         function: {
             name: "generate_feedback",
-            description: "Give feedback on how to structure time management for a goal, and how to set up a schedule to achieve it, and how to track progress",
+            description: "create a smart goal for tomorrow and offer feedback on my current progress and things to keep in mind",
             parameters: {
                 type: "object",
                 properties: {
@@ -59,7 +59,11 @@ const body = req.body;
     console.log(mainGoal,"the main goal in the submit word route")
     console.log(subGoals,"the subgoals in the submit word route")
 
-
+function formatSubgoals(subGoals) {
+  return subGoals.map(subgoal => {
+    return `Subgoal: ${subgoal.goalText}, Progress: ${subgoal.progress}, Feedback: ${subgoal.feedback}, Additional Comments: ${subgoal.feedbackAdditionalComments}, Result: ${subgoal.feedbackResult}`;
+  }).join('\n');
+}
 
 //        console.log(chat,"the chat in the findGoal route")
 //        const messages = [
@@ -71,8 +75,8 @@ const body = req.body;
          const response = await openai.chat.completions.create({
              model: "gpt-4o-mini",
     messages: [
-        {role: 'system', content: 'You are a helpful assistant that helps me create my next goal toward my   12 week goal.'},
-        {role: 'user', content: 'Can you help me reach my goal?'},
+                { role: 'system', content: 'You are a helpful assistant that helps me create my next goal toward my 12-week goal. Provide specific feedback based on the given main goal and subgoals.' },
+        {role: 'user', content: 'please be my goal coach.'},
 //        {role: 'assistant', content: 'Sure, what is your goal?'},
 //        {role: 'user', content: `${renderedGoal}`},
 //        {role: 'assistant', content: 'Okay, what actions are needed to achieve this goal?'},
@@ -83,7 +87,10 @@ const body = req.body;
 //        {role: 'user', content: `${currentProgress}`},
 //        {role: 'assistant', content: 'What is your weekly goal?'},
 //        {role: 'user', content: `${week1Goal}`},
-        {role:'user', content: "can you generate me a daily goal"}
+        {role:'user', content: "can you generate my next daily goal based on my current progress."},
+        {role:'user', content: `my 12 week goal is ${mainGoal.goalText}` },
+        {role: "assistant", content: "what is your current progress on your 12 week goal?"},
+    { role: 'user', content: `my current progress is:\n${formatSubgoals(subGoals)}` }
     ],
              tools: tools,
              tool_choice:{"type": "function", "function": {"name": "generate_feedback"}}

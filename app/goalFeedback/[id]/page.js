@@ -21,7 +21,7 @@ async function page ({params}) {
   console.log(goal, "the goal%%%%%%%%%%")
   return (
     <div className=" mt-[100px] w-screen ">
-    <h1 className="text-3xl text-center m-6">Goal Feedback</h1>
+    <h1 className="text-3xl text-center m-6">How Did It Go?</h1>
         <div className="flex justify-center   ">
         <h3 className="bg-orange-300 p-4 rounded-xl  max-w-[500px] w-[90vw]">
         {goal.goalText}

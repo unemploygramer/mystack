@@ -1,5 +1,8 @@
-color code the uncompleted vs completed tasks in the calander view
+create goals, track progress, and reflect. Anything beyond that can be added later.
 
-
+what is needed:
+- show weekly goal on the calendar week
+-show notification for missing feedback
+-show notification to set the next available goal day
 
  feed that into the aifeedBack api route
