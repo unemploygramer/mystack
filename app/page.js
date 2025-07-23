@@ -25,23 +25,23 @@ const getNextSevenDays = () => {
   return days;
 };
   const days = getNextSevenDays(); // Get the next 7 days
-
+//    <div>
+//      <h2>Weekly Calendar</h2>
+//      <ul>
+//        {days.map((day, index) => (
+//          <li key={index}>
+//            {day.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+//          </li>
+//        ))}
+//      </ul>
+//    </div>
 
   return (
     <main className="">
 <Title/>
 
 <JournalInput/>
-    <div>
-      <h2>Weekly Calendar</h2>
-      <ul>
-        {days.map((day, index) => (
-          <li key={index}>
-            {day.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
-          </li>
-        ))}
-      </ul>
-    </div>
+
     </main>
   );
 }
