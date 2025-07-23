@@ -1,3 +1,4 @@
+
 "use client"
 import React, { useState } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react"
@@ -35,8 +36,49 @@ function FeedbackInput({subgoalId}) {
     }
   };
 
-  const handleNextGoalSubmit = () => {
+  const handleNextGoalSubmit = async () => {
     console.log('Next Goal:', nextGoal);
+    await saveNextGoal();
+  }
+
+  const saveNextGoal = async () => {
+    if (!session || !session.user || !session.user.email) {
+      console.error('User is not authenticated');
+      return;
+    }
+
+const subgoalData = {
+  goalText: nextGoal,
+  weekNumber: 1,
+  advice: aiFeedback.dailyGoalAdvice,
+  feedback: '',
+  progress: '',
+  timeSpent: 0,
+  completionStatus: false,
+  userNotes: '',
+  goalOutcome: '',
+  goalType: 'daily',
+  owner: session.user.email,
+  dueDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // Due date is 24 hours from now
+};
+
+try {
+  const response = await fetch('/api/createDailyGoal', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(subgoalData),
+  });
+
+      if (!response.ok) {
+        throw new Error('Failed to save the next goal');
+      }
+
+      console.log('Next goal saved successfully');
+    } catch (error) {
+      console.error('Error saving next goal:', error);
+    }
   }
 
   const fetchAllSubgoals = async (user) => {
@@ -58,7 +100,7 @@ function FeedbackInput({subgoalId}) {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({mainGoal: mainGoal, subGoals: data.subGoals}),
+            body: JSON.stringify({mainGoal: mainGoal, subGoals: data.subGoals, currentGoal: subgoalId}),
           });
           if (AiFeedback.ok) {
             const aiData = await AiFeedback.json();

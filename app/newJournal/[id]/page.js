@@ -52,23 +52,21 @@ async function page({params}) {
 if (journal.owner.includes('@')) {
  redirect('/login')
 }
-
+//      <GenerateVoice affirmation={journal.affirmation} />
   return (
-  <div className="container mx-auto px-4 py-8 mt-24">
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
-      <div key={journal._id} className="  overflow-hidden sm:rounded-lg p-6">
-
-        <div className="shadow bg-amber-700 p-2 rounded mt-4 mb-4  rounded-xl">
-          <p className="text-white  text-2xl text-center p-5 ">{journal.affirmation}</p>
-
-        </div>
-               <GenerateVoice affirmation={journal.affirmation}/>
-                       <h2 className="mt-6 text-md font-bold  text-center">{journal.text}</h2>
-        <p className="text-sm text-gray-300">{new Date(journal.date).toLocaleDateString()}</p>
+<div className="container mx-auto px-4 py-8 mt-24">
+  <div className="flex justify-center items-center flex-wrap gap-6">
+    <div key={journal._id} className="overflow-hidden sm:rounded-lg p-6 bg-orange-300 ">
+      <div className="shadow bg-orange-400 p-2 rounded mt-4 mb-4 rounded-xl">
+        <p className="text-white text-2xl text-center p-5">{journal.affirmation}</p>
       </div>
 
+      <h2 className="mt-6 text-md font-bold text-center">{journal.text}</h2>
+      <p className="text-sm text-gray-300">{new Date(journal.date).toLocaleDateString()}</p>
     </div>
   </div>
+</div>
+
   );
 }
 

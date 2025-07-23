@@ -156,7 +156,7 @@ const saveGoal = async () => {
             weekNumber: 1,
             advice: dailyGoalAdvice, // Add the daily goal advice here
             feedback: '',
-            progress: currentProgress,
+            progress: "",
             timeSpent: 0,
             completionStatus: false,
             userNotes: '',
@@ -169,7 +169,7 @@ const saveGoal = async () => {
             weekNumber: 1,
             advice: "",
             feedback: '',
-            progress: currentProgress,
+            progress: "",
             timeSpent: 0,
             completionStatus: false,
             userNotes: '',
@@ -475,42 +475,3 @@ className="bg-orange-300 border-2 border-orange-500 flex flex-col p-4 mt-4"
   )
 }
 
-//      <form
-//        onSubmit={(e) => {
-//          e.preventDefault();
-//          const hours = Array.from(e.target.elements)
-//            .filter((element) => element.name === 'taskHours')
-//            .map((input) => Number(input.value));
-//          const total = hours.reduce((a, b) => a + b, 0);
-//          if (total > totalHours) {
-//            alert('The sum of the allocated hours cannot exceed the total hours.');
-//            return;
-//          }
-//          setTaskHours(
-//            verbs.map((verb, index) => ({
-//              task: verb,
-//              hours: hours[index],
-//            }))
-//          );
-//        }}
-//        className="flex flex-col items-center w-[90vw] max-w-[400px] mt-8 p-2 bg-orange-300 mt-4"
-//      >
-//
-//        <label htmlFor="hoursPerWeek" className="text-xl text-center mt-4">
-//          Allocate hours to each task:
-//        </label>
-//        {verbs.map((verb, index) => (
-//          <div key={index} className="flex justify-between items-center w-full mt-2">
-//            <span>{verb}</span>
-//            <input
-//              name="taskHours"
-//              type="number"
-//              min="0"
-//              className="p-2 mb-2 bg-orange-200 rounded"
-//            />
-//          </div>
-//        ))}
-//        <button type="submit" className="bg-blue-500 text-white rounded p-2 px-4 mt-4">
-//          Submit
-//        </button>
-//      </form>

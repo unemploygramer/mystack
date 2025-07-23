@@ -19,7 +19,7 @@ export async function PUT(req, context) {
     console.log('Subgoal found:', subgoal);
     subgoal.feedbackDifficulty = difficulty;
     subgoal.feedbackResult = result;
-    subgoal.feedbackAdditionalComments = additionalComments;
+    subgoal.progress = result;
     await subgoal.save();
     console.log('Subgoal updated successfully:', subgoal);
     return NextResponse.json({message: "Subgoal feedback updated successfully"});

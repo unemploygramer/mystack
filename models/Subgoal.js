@@ -17,7 +17,7 @@ const subgoalSchema = new mongoose.Schema({
   },
   progress: {
     type: String,
-    required: true,
+    required: false,
   },
 
   feedbackResult: {

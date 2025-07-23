@@ -10,6 +10,11 @@ export async function POST(req) {
     console.log('Request body:', { goalText, verbs, totalHours, currentProgress, goalAdvice, suggestedGoal, owner, subgoals });
     await connect();
 
+    // Check if subgoals is defined and is an array
+    if (!Array.isArray(subgoals)) {
+      throw new Error('Subgoals must be an array');
+    }
+
     // Create new subgoals
     const newSubgoals = await Promise.all(subgoals.map(subgoal => Subgoal.create({
       ...subgoal,
@@ -25,7 +30,7 @@ export async function POST(req) {
       goalAdvice,
       suggestedGoal,
       owner,
-            createdDate: Date.now(),
+      createdDate: Date.now(),
       subgoals: newSubgoals.map(subgoal => subgoal._id)
     });
     console.log('New goal:', newGoal); // Log the new goal
