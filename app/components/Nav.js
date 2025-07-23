@@ -41,7 +41,8 @@ console.log(session,"what does the session say");
     }
   };
 
- 
+//                                  <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/createGoal">Create Goal</Link>
+//                                  <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/calendar/1">Calendar</Link>
   return (
     <div className=" z-50 bg-gray-600  h-20 flex items-center justify-end  pr-4 pl-2   fixed top-0 w-full">
        <div>
@@ -71,8 +72,7 @@ console.log(session,"what does the session say");
            <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/List">Entries</Link>
            <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/">Make Entry</Link>
            <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/login">Login</Link>
-                                 <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/createGoal">Create Goal</Link>
-                                 <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/calendar/1">Calendar</Link>
+
 
                       <Link onClick={()=> setOpen(false)} className="text-stone-100 p-4 text-2xl text-center" href="/SignUp">Sign Up</Link>
 
